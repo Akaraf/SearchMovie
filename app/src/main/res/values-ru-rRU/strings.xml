@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_media">Медиа</string>
+    <string name="title_search">Поиск</string>
+    <string name="title_profile">Профиль</string>
+    <string name="title_home">Главная</string>
+
+    <string name="digital_releases">Цифровые релизы</string>
+
+    <string name="search_clear">Очистить поиск</string>
+    <string name="search_tooltip_text">Фильмы, сериалы, персоны</string>
+    <string name="category">Категории</string>
+    <string name="popular_persons">Поаулярные персоны</string>
+    <string name="kinopoisk">КиноПоиск</string>
+    <string name="years">Годы</string>
+    <string name="genre">Жанры</string>
+    <string name="countries">Страны</string>
+
+    <string name="my_search_movies">Мой КиноПоиск</string>
+    <string name="my_stars">Мои звёзды</string>
+    <string name="my_movies">Мои фильмы</string>
+    <string name="app">Приложение</string>
+    <string name="settings">Настройки</string>
+    <string name="support_service">Служба поддержки</string>
+    <string name="history">История</string>
+    <string name="logout">Выйти</string>
+    <string name="top">Топ</string>
+    <string name="compilations">Подборки</string>
+    <string name="all">Все</string>
+    <string name="my_films">Мои фильмы</string>
+    <string name="frames">Кадры</string>
+    <string name="trailer">Трейлер</string>
+    <string name="useful">Полезное</string>
+    <string name="open">Открыть в КиноПоиске</string>
+    <string name="share">Поделиться ссылкой</string>
+    <string name="facts">Факты</string>
+    <string name="best">Лучшие фильмы</string>
+    <string name="popular">Популярные фильмы</string>
+    <string name="await">Ожидаемые фильмы</string>
+    <string name="watch_later">Буду смотреть</string>
+    <string name="favorite_movies">Любимые фильмы</string>
+    <string name="comedy">Комедия</string>
+    <string name="cartoon">Мультфильм</string>
+    <string name="fantasy">Фэнтези</string>
+    <string name="drama">Драма</string>
+    <string name="action">Боевик</string>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.raaf.android.searchmovie.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_media"
+        android:name="com.raaf.android.searchmovie.ui.media.MediaFragment"
+        android:label="@string/title_media"
+        tools:layout="@layout/fragment_media" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.raaf.android.searchmovie.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" >
+            <argument
+                android:name="query"
+                android:defaultValue="none" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.raaf.android.searchmovie.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.raaf.android.searchmovie.ui.search.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" >
+        <argument
+            android:name="query"
+            app:argType="string"
+            android:defaultValue="none" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmFragment"
+        android:name="com.raaf.android.searchmovie.ui.FilmFragment"
+        android:label="FilmFragment"
+        tools:layout="@layout/fragment_film" >
+        <action
+            android:id="@+id/action_filmFragment_to_filmFramesFragment"
+            app:destination="@id/filmFramesFragment" />
+    </fragment>
+    <action android:id="@+id/action_global_filmFragment" app:destination="@id/filmFragment" />
+    <fragment
+        android:id="@+id/detailCategoryFragment"
+        android:name="com.raaf.android.searchmovie.ui.home.swipeFragments.DetailCategoryFragment"
+        android:label="DetailCategoryFragment" /><action android:id="@+id/action_global_detailCategoryFragment" app:destination="@id/detailCategoryFragment"/>
+    <fragment
+        android:id="@+id/filmFramesFragment"
+        android:name="com.raaf.android.searchmovie.ui.FilmFramesFragment"
+        android:label="FilmFramesFragment" />
+</navigation>

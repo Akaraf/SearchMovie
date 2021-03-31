@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name" translatable="false">Search Movie</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_media">Media</string>
+    <string name="title_search">Search</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="search_clear">Search Clear</string>
+    <string name="search_tooltip_text">Movies, serials, persons</string>
+    <string name="category">Category</string>
+    <string name="popular_persons">Popular persons</string>
+    <string name="kinopoisk">SearchMovie</string>
+    <string name="years">Years</string>
+    <string name="genre">Genre</string>
+    <string name="countries">Countries</string>
+
+    <string name="my_search_movies">My SearchMovies</string>
+    <string name="my_stars">My stars</string>
+    <string name="my_movies">My movies</string>
+    <string name="app">App</string>
+    <string name="settings">Settings</string>
+    <string name="support_service">Support service</string>
+    <string name="history">History</string>
+    <string name="logout">Logout</string>
+
+    <string name="compilations">Compilations</string>
+    <string name="comedy">Comedy</string>
+    <string name="fantasy">Fantasy</string>
+    <string name="cartoon">Cartoon</string>
+    <string name="drama">Drama</string>
+    <string name="action">Action</string>
+
+    <string name="top">Top</string>
+    <string name="best">Best films</string>
+    <string name="popular">Popular films</string>
+    <string name="await">Await films</string>
+    <string name="digital_releases">Digital releases</string>
+    <string name="my_films">My films</string>
+    <string name="watch_later">Watch later</string>
+    <string name="favorite_movies">Favorite movies</string>
+    <string name="all">All</string>
+
+    <string name="frames">Frames</string>
+    <string name="trailer">Trailer</string>
+    <string name="facts">Facts</string>
+    <string name="useful">Useful</string>
+    <string name="open">Open in KinoPoisk</string>
+    <string name="share">Share a link</string>
+</resources>
