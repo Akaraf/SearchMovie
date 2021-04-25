@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonElement
 import com.raaf.android.searchmovie.App
+import com.raaf.android.searchmovie.dataModel.Frame
+import com.raaf.android.searchmovie.dataModel.Trailer
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
 import com.raaf.android.searchmovie.dataModel.rootJSON.*
 import com.raaf.android.searchmovie.database.CompilationDatabase
@@ -65,7 +67,7 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
                 responseLiveData.value = filmResponse
                 Log.d(TAG, "${response.body().toString()}")
                 if (isAddFromDB && filmResponse != null) {
-                    executor.execute { myFilmsDao.insert(appConverter.parseMovieById(filmResponse, parent)) }
+                    executor.execute { myFilmsDao.insert(appConverter.parseMovieByIdToMovie(filmResponse, parent)) }
                 }
             }
         })
@@ -76,7 +78,7 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
         var dbLiveData = myFilmsDao.loadAll()
         var list = mutableListOf<FilmSwipeItem>()
         Log.d(TAG, "dbLD value size = ${dbLiveData.value?.size ?:0}")
-        dbLiveData.value?.let { list.addAll(appConverter.parseMovies(it)) }
+        dbLiveData.value?.let { list.addAll(appConverter.parseMoviesToFilmSwipeItem(it)) }
         Log.d(TAG, "list size = ${list.size}")
         var listLiveData = MutableLiveData<List<FilmSwipeItem>>()
         listLiveData.value = list
@@ -85,6 +87,49 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
 
     fun deleteMyFilms() {
         executor.execute { myFilmsDao.delete() }
+    }
+
+    // Frames by Film ID(2)
+    fun fetchFrames(id: Int): LiveData<List<Frame>> {
+        val responseLiveData: MutableLiveData<List<Frame>> = MutableLiveData()
+        val searchesRequest: Call<FramesByFilmId> = filmApi.fetchFrames(id)
+
+        searchesRequest.enqueue(object : Callback<FramesByFilmId> {
+            override fun onFailure(call: Call<FramesByFilmId>, t: Throwable) {
+                Log.e(TAG, "Failed response", t)
+            }
+
+            override fun onResponse(call: Call<FramesByFilmId>, response: Response<FramesByFilmId>) {
+                val filmResponse: FramesByFilmId? = response.body()
+                responseLiveData.value = appConverter.parseFramesToFrame(filmResponse!!.frames)
+                Log.d(TAG, "${response.body().toString()}")
+                if (responseLiveData.value != null) {
+                    Log.d(TAG, "${responseLiveData.value!!.size}")
+                }
+            }
+        })
+        return responseLiveData
+    }
+
+    //    Трейлеры и тизеры по фильму(3)
+    fun fetchTrailers(id: Int): LiveData<List<Trailer>> {
+        val responseLiveData: MutableLiveData<List<Trailer>> = MutableLiveData()
+        val searchesRequest: Call<TrailerResponse> = filmApi.fetchVideos(id)
+
+        searchesRequest.enqueue(object : Callback<TrailerResponse> {
+            override fun onFailure(call: Call<TrailerResponse>, t: Throwable) {
+                Log.e(TAG, "Failed response", t)
+            }
+
+            override fun onResponse(call: Call<TrailerResponse>, response: Response<TrailerResponse>) {
+                val filmResponse: TrailerResponse? = response.body()
+                if (filmResponse != null) {
+                    responseLiveData.value = filmResponse.trailers
+                    Log.d(TAG, "${responseLiveData.value!!.size}")
+                }
+            }
+        })
+        return responseLiveData
     }
 
     //  Search By Keyword(6)
@@ -150,7 +195,7 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
                 responseLiveData.value = filmResponse
                 Log.d(TAG, "${response.body().toString()}")
                 if (isAddFromDB && filmResponse != null) {
-                    executor.execute { compilationDao.insert(appConverter.parseFilms(filmResponse.films, parent, filmResponse.pagesCount)) }
+                    executor.execute { compilationDao.insert(appConverter.parseFilmsToFilmSwipeItem(filmResponse.films, parent, filmResponse.pagesCount)) }
                 }
             }
         })
@@ -172,7 +217,7 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
                 val filmResponse: SearchByFilters? = response.body()
                 if (filmResponse != null) {
                     pagesCount.value = filmResponse.pagesCount
-                    responseLiveData = appConverter.parseFilms(filmResponse.films, categoryName, filmResponse.pagesCount)
+                    responseLiveData = appConverter.parseFilmsToFilmSwipeItem(filmResponse.films, categoryName, filmResponse.pagesCount)
                 }
                 Log.d(TAG, "ResponseLiveDataResult                          $responseLiveData")
                 Log.d(TAG, "${response.body()}  page=${response.body()?.pagesCount}")

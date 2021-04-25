@@ -22,7 +22,7 @@
     <string name="settings">Settings</string>
     <string name="support_service">Support service</string>
     <string name="history">History</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Log out</string>
 
     <string name="compilations">Compilations</string>
     <string name="comedy">Comedy</string>
@@ -47,4 +47,18 @@
     <string name="useful">Useful</string>
     <string name="open">Open in KinoPoisk</string>
     <string name="share">Share a link</string>
+    <string name="add_to">Add to</string>
+    <string name="watch">Watch</string>
+
+    <string name="create_account">Create Account</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in">Sign in</string>
+    <string name="email">Email address</string>
+    <string name="password">Password</string>
+    <string name="or">or</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="invalid_password">Invalid password!</string>
+    <string name="invalid_email">Invalid email!</string>
+    <string name="success">Success!</string>
+    <string name="authentication_failed">Authentication failed!</string>
 </resources>

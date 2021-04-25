@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        viewPager = view.findViewById(R.id.view_pager)
+        viewPager = view.findViewById(R.id.frames_view_pager)
         tabLayout = view.findViewById(R.id.tab_layout)
         return view
     }

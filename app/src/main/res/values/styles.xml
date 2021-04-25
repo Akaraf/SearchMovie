@@ -4,4 +4,40 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/snow</item>
     </style>
+
+    <style name="TextHead">
+        <item name="android:layout_marginStart">@dimen/margin_16</item>
+        <item name="android:layout_marginTop">@dimen/margin_32</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16</item>
+        <item name="android:layout_marginBottom">@dimen/margin_16</item>
+        <item name="android:textSize">@dimen/head_text_size</item>
+    </style>
+
+    <style name="TextD">
+        <item name="android:layout_marginStart">@dimen/margin_16</item>
+        <item name="android:layout_marginTop">@dimen/margin_24</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16</item>
+        <item name="android:layout_marginBottom">@dimen/margin_16</item>
+    </style>
+
+    <style name="AllMargin16">
+        <item name="android:layout_marginStart">@dimen/margin_16</item>
+        <item name="android:layout_marginTop">@dimen/margin_16</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16</item>
+        <item name="android:layout_marginBottom">@dimen/margin_16</item>
+    </style>
+
+    <style name="AllMargin4">
+        <item name="android:layout_marginStart">@dimen/margin_4</item>
+        <item name="android:layout_marginTop">@dimen/margin_4</item>
+        <item name="android:layout_marginEnd">@dimen/margin_4</item>
+        <item name="android:layout_marginBottom">@dimen/margin_4</item>
+    </style>
+
+    <style name="AllMargin12">
+        <item name="android:layout_marginStart">@dimen/margin_12</item>
+        <item name="android:layout_marginTop">@dimen/margin_12</item>
+        <item name="android:layout_marginEnd">@dimen/margin_12</item>
+        <item name="android:layout_marginBottom">@dimen/margin_12</item>
+    </style>
 </resources>

@@ -2,14 +2,16 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AllMargin16"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.FilmFragment">
+    android:layout_marginBottom="2dp"
+    tools:context=".ui.film.FilmFragment">
 
     <LinearLayout
         android:id="@+id/checkbox_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -23,151 +25,177 @@
             android:id="@+id/favorite_movies_checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/favorite_movies"/>
+            android:text="@string/favorite_movies" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/main_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:scrollbars="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/film_image"
-                android:layout_width="90dp"
-                android:layout_height="132dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/splash_screen" />
-
-            <TextView
-                android:id="@+id/film_ru_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/film_image"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Не грози южному централу, попивая сок в черном квартале" />
-
-            <TextView
-                android:id="@+id/film_en_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/film_image"
-                app:layout_constraintTop_toBottomOf="@+id/film_ru_name_text"
-                tools:text="Don't Be a Menace to South Central While drinking your juice in the hood" />
-
-            <TextView
-                android:id="@+id/genres_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/film_image"
-                app:layout_constraintTop_toBottomOf="@+id/film_en_name_text"
-                tools:text="комедия, кримнал" />
-
-            <TextView
-                android:id="@+id/country_and_duration_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/genres_text"
-                app:layout_constraintTop_toBottomOf="@+id/genres_text"
-                tools:text="USA, 1.29" />
-
-            <TextView
-                android:id="@+id/slogan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/country_and_duration_text"
-                app:layout_constraintTop_toBottomOf="@+id/country_and_duration_text"
-                tools:text="Don't Be a Menace to South Central While drinking your juice in the hood" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerPadding="4dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/description"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/separator"
-                android:showDividers="beginning"
-                tools:text="Don't Be a Menace to South Central While drinking your juice in the hood" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/film_image"
+                    android:layout_width="90dp"
+                    android:layout_height="132dp"
+                    android:background="@drawable/round_outline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/splash_screen" />
+
+                <TextView
+                    android:id="@+id/film_ru_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/film_image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Не грози южному централу, попивая сок в черном квартале" />
+
+                <TextView
+                    android:id="@+id/film_en_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toEndOf="@+id/film_image"
+                    app:layout_constraintTop_toBottomOf="@+id/film_ru_name_text"
+                    tools:text="Don't Be a Menace to South Central While drinking your juice in the hood" />
+
+                <TextView
+                    android:id="@+id/genres_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toEndOf="@+id/film_image"
+                    app:layout_constraintTop_toBottomOf="@+id/film_en_name_text"
+                    tools:text="комедия, кримнал" />
+
+                <TextView
+                    android:id="@+id/country_and_duration_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="@+id/genres_text"
+                    app:layout_constraintTop_toBottomOf="@+id/genres_text"
+                    tools:text="USA, 1.29" />
+
+                <TextView
+                    android:id="@+id/slogan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="@+id/country_and_duration_text"
+                    app:layout_constraintTop_toBottomOf="@+id/country_and_duration_text"
+                    tools:text="Don't Be a Menace to South Central While drinking your juice in the hood" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@drawable/separator"
-                android:orientation="horizontal"
-                android:showDividers="beginning">
+                android:layout_marginTop="@dimen/margin_16"
+                android:dividerPadding="4dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/video"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:divider="@drawable/separator"
-                    android:gravity="center_horizontal"
-                    android:showDividers="end"
-                    android:text="@string/trailer" />
+                    android:showDividers="beginning"
+                    tools:text="Don't Be a Menace to South Central While drinking your juice in the hood" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:divider="@drawable/separator"
+                    android:orientation="horizontal"
+                    android:showDividers="beginning">
+
+                    <TextView
+                        android:id="@+id/video"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@drawable/separator"
+                        android:gravity="center_horizontal"
+                        android:showDividers="end"
+                        android:text="@string/trailer" />
+
+                    <TextView
+                        android:id="@+id/frames"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/frames" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/frames"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/frames" />
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:divider="@drawable/separator"
+                    android:showDividers="beginning"
+                    android:text="@string/facts" />
+
+                <TextView
+                    android:id="@+id/facts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/separator"
+                    android:ellipsize="end"
+                    android:maxLines="6"
+                    android:scrollbars="vertical"
+                    android:showDividers="beginning"
+                    android:singleLine="false" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:divider="@drawable/separator"
+                    android:showDividers="beginning"
+                    android:text="@string/useful" />
+
+                <TextView
+                    android:id="@+id/open"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:divider="@drawable/separator"
+                    android:showDividers="beginning"
+                    android:text="@string/open"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/share"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:divider="@drawable/separator"
+                    android:showDividers="beginning|end"
+                    android:text="@string/share"
+                    android:textStyle="bold" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/separator"
-                android:showDividers="beginning"
-                android:text="@string/facts" />
-
-            <TextView
-                android:id="@+id/facts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/separator"
-                android:ellipsize="end"
-                android:maxLines="6"
-                android:scrollbars="vertical"
-                android:showDividers="beginning"
-                android:singleLine="false" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/separator"
-                android:showDividers="beginning"
-                android:text="@string/useful" />
-
-            <TextView
-                android:id="@+id/open"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/separator"
-                android:showDividers="beginning"
-                android:text="@string/open" />
-
-            <TextView
-                android:id="@+id/share"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/separator"
-                android:showDividers="beginning|end"
-                android:text="@string/share" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -175,9 +203,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="@string/add_to"
         android:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        android:contentDescription="Add to" />
-
+        android:src="@android:drawable/ic_input_add"
+        app:pressedTranslationZ="12dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

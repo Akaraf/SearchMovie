@@ -2,6 +2,8 @@ package com.raaf.android.searchmovie.repository
 
 import android.util.Log
 import com.raaf.android.searchmovie.dataModel.Film
+import com.raaf.android.searchmovie.dataModel.Frame
+import com.raaf.android.searchmovie.dataModel.Frames
 import com.raaf.android.searchmovie.dataModel.Movie
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
 import com.raaf.android.searchmovie.dataModel.rootJSON.MovieById
@@ -10,7 +12,7 @@ private const val TAG = "AppConverter"
 
 class AppConverter {
 
-    fun parseMovieById(movieById: MovieById, parentId: String) : Movie {
+    fun parseMovieByIdToMovie(movieById: MovieById, parentId: String) : Movie {
         var item = Movie()
         item.DBId = movieById.data.filmId.toString() + parentId
         item.filmId = movieById.data.filmId
@@ -39,7 +41,7 @@ class AppConverter {
         return item
     }
 
-    fun parseMovies(movies: List<Movie>) : List<FilmSwipeItem> {
+    fun parseMoviesToFilmSwipeItem(movies: List<Movie>) : List<FilmSwipeItem> {
         var list = mutableListOf<FilmSwipeItem>()
         for (count in movies) {
             var item = FilmSwipeItem()
@@ -47,7 +49,7 @@ class AppConverter {
             item.filmId = count.filmId
             item.nameRu = count.nameRu ?: ""
             item.nameEn = count.nameEn ?: ""
-            item.genre = count.genres[0].toString()
+            item.genre = count.genres[0]
             item.posterUrl = count.posterUrlPreview
             item.parentId = count.parent
             item.totalPage = 0
@@ -57,7 +59,7 @@ class AppConverter {
         return list
     }
 
-    fun parseFilms(films: List<Film>, parentId: String, page: Int) : MutableList<FilmSwipeItem> {
+    fun parseFilmsToFilmSwipeItem(films: List<Film>, parentId: String, page: Int) : MutableList<FilmSwipeItem> {
         var list = mutableListOf<FilmSwipeItem>()
         for (count in films) {
             var item = FilmSwipeItem()
@@ -65,13 +67,27 @@ class AppConverter {
             item.filmId = count.filmId
             item.nameRu = count.nameRu ?: ""
             item.nameEn = count.nameEn ?: ""
-            item.genre = count.genres[0].toString()
+            var genre = ""
+            genre += count.genres[0].genre
+            item.genre = genre
             item.posterUrl = count.posterUrlPreview
             item.parentId = parentId
             item.totalPage = page
             list.add(item)
         }
         Log.e(TAG, "parseFilms : ${list.size}")
+        return list
+    }
+
+    fun parseFramesToFrame(frames: List<Frames>) : List<Frame> {
+        var list = mutableListOf<Frame>()
+        for ((countId, count) in frames.withIndex()) {
+            var item = Frame()
+            item.url = count.image
+            item.id = countId
+            list.add(item)
+        }
+        Log.e(TAG, "parseFramesToFrame : ${list.size}")
         return list
     }
 }

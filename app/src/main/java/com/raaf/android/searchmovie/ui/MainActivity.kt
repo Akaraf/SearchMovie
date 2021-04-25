@@ -1,5 +1,6 @@
 package com.raaf.android.searchmovie.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View.GONE
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.repository.AppRepository
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -51,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         fillingTopDb(typeTop[2], nameTop[2])
 
         appRepository.getCompilation()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
     }
 
     private fun fillingTopDb(type: String, name: String) {

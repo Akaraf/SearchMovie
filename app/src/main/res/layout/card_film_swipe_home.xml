@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="172dp"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="105dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:layout_width="170dp"
-            android:layout_height="260dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="104dp"
+            android:layout_height="144dp"
+            app:cardCornerRadius="6dp">
 
-        <ImageView
-            android:id="@+id/image_film"
-            android:layout_height="260dp"
-            android:layout_width="170dp"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/avatars"/>
+            <ImageView
+                android:id="@+id/image_film"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
 
         <ImageButton
-                android:id="@+id/button_delete"
-                android:layout_width="17dp"
-                android:layout_height="26dp"
-                android:layout_gravity="top|end"
-                android:visibility="gone"
-                android:src="@android:drawable/ic_menu_close_clear_cancel"/>
-        </FrameLayout>
+            android:id="@+id/button_delete"
+            android:layout_width="17dp"
+            android:layout_height="26dp"
+            android:layout_gravity="top|end"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:visibility="gone" />
+    </FrameLayout>
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Name Film"/>
+    <TextView
+        android:id="@+id/name"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        tools:text="Name Film" />
 
-        <TextView
-            android:id="@+id/genre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Category"/>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/genre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Category" />
+</LinearLayout>

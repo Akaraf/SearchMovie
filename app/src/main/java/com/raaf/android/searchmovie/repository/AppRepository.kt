@@ -6,24 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.R
-import com.raaf.android.searchmovie.api.FilmApi
 import com.raaf.android.searchmovie.api.FilmFetcher
-import com.raaf.android.searchmovie.api.FilmInterceptor
-import com.raaf.android.searchmovie.dataModel.Film
-import com.raaf.android.searchmovie.dataModel.homeItems.CategoryWithSwipe
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
-import com.raaf.android.searchmovie.dataModel.homeItems.FilmsCategoryItem
-import com.raaf.android.searchmovie.dataModel.rootJSON.SearchByFilters
 import com.raaf.android.searchmovie.dataModel.rootJSON.SearchByKeyword
 import com.raaf.android.searchmovie.database.CompilationDatabase
 import com.raaf.android.searchmovie.database.MyFilmsDatabase
 import com.raaf.android.searchmovie.database.top.TopDatabase
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
@@ -67,7 +55,7 @@ class AppRepository @Inject constructor (val context: Context,
         val listLiveData = MutableLiveData<List<FilmSwipeItem>>()
         dbLiveData.observeForever { list->
             Log.d(TAG, "lv size = ${list.size}")
-            list.let { listResult.addAll(appConverter.parseMovies(list)) }
+            list.let { listResult.addAll(appConverter.parseMoviesToFilmSwipeItem(list)) }
             Log.d(TAG, "list size = ${listResult.size}")
             listLiveData.value = listResult
         }

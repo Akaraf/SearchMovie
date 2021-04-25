@@ -44,4 +44,17 @@
     <string name="fantasy">Фэнтези</string>
     <string name="drama">Драма</string>
     <string name="action">Боевик</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="email">Почта</string>
+    <string name="password">Пароль</string>
+    <string name="confirm_password">Повторите пароль</string>
+    <string name="invalid_password">Неверный пароль</string>
+    <string name="add_to">Добавить в</string>
+    <string name="watch">Смотреть</string>
+    <string name="sign_in">Войти</string>
+    <string name="or">или</string>
+    <string name="invalid_email">Неверный адрес почты</string>
+    <string name="success">Успешно</string>
+    <string name="authentication_failed">Ошибка</string>
+    <string name="sign_up">Зарегистрироваться</string>
 </resources>

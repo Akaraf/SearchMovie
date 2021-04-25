@@ -8,9 +8,12 @@
     <color name="snow">#FFF2F2F2</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="primaryColor">#ff983f</color>
+    <color name="primaryLightColor">#ffc96e</color>
+    <color name="primaryDarkColor">#c76907</color>
+    <color name="secondaryColor">#f2f2f2</color>
+    <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDarkColor">#bfbfbf</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
 </resources>

@@ -17,15 +17,15 @@ interface FilmApi {
 
 //    Кадры по фильму(2)
     @GET("api/v2.1/films/{id}/frames")
-    fun fetchFrames(@Path(value = "id", encoded = true) id: Int) : Call<JsonElement>
+    fun fetchFrames(@Path(value = "id", encoded = true) id: Int) : Call<FramesByFilmId>
 
 //    Трейлеры и тизеры по фильму(3)
     @GET("api/v2.1/films/{id}/videos")
-    fun fetchStudios(@Path(value = "id", encoded = true) id: Int) : Call<JsonElement>
+    fun fetchVideos(@Path(value = "id", encoded = true) id: Int) : Call<TrailerResponse>
 
 //    Студии по фильму(4)
     @GET("api/v2.1/films/{id}/studios")
-    fun fetchVideos(@Path(value = "id", encoded = true) id: Int) : Call<JsonElement>
+    fun fetchStudios(@Path(value = "id", encoded = true) id: Int) : Call<JsonElement>
 
 //    Сиквелы и приквелы по фильму(5)
     @GET("api/v2.1/films/{id}/sequels-and-prequels")

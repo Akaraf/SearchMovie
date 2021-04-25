@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/AllMargin16"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/action_name"
+        android:text="@string/sign_in"
+        android:textStyle="bold"
+        android:textSize="@dimen/head_text_size"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="64dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/edit_login"
+        android:hint="@string/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/edit_password"
+        android:hint="@string/password"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/edit_confirm_password"
+        android:hint="@string/confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/button_action"
+        android:text="@string/sign_in"
+        android:layout_marginTop="@dimen/margin_32"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/sub_head_text_size"
+        android:text="@string/or"/>
+
+    <Button
+        android:id="@+id/button_change_action"
+        android:text="@string/create_account"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
