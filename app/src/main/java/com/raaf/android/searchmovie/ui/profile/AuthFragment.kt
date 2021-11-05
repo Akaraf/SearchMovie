@@ -6,19 +6,21 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.raaf.android.searchmovie.R
+import kotlinx.coroutines.awaitAll
+import java.util.*
 
 private const val TAG = "AuthFragment"
 private const val SUCCESS_FLAG = "Success"
 private const val ERROR_FLAG = "Error"
 private const val INCORRECT_EMAIL = "Incorrect"
+private const val AUTH_FLAG = "Auth"
 
 class AuthFragment : Fragment() {
 
@@ -59,17 +61,39 @@ class AuthFragment : Fragment() {
     }
 
     fun makeAction(boolean: Boolean, email: String, password: String, confirmPassword: String) {
+        val nav = NavHostFragment.findNavController(this@AuthFragment)
         if (boolean) {
             if (password == confirmPassword) {
                 var flag = authViewModel.createAccount(email, password, this@AuthFragment)
-                if (flag == ERROR_FLAG) Toast.makeText(this.context, this.getText(R.string.authentication_failed), Toast.LENGTH_LONG).show()
-                if (flag == INCORRECT_EMAIL) Toast.makeText(this.context, this.getText(R.string.invalid_email), Toast.LENGTH_LONG).show()
-                if (flag == SUCCESS_FLAG) Toast.makeText(this.context, this.getText(R.string.success), Toast.LENGTH_LONG).show()
-            } else Toast.makeText(this.context, this.getText(R.string.invalid_password), Toast.LENGTH_LONG).show()
+
+                if (flag == ERROR_FLAG) {
+                    Toast.makeText(this.context, this.getText(R.string.authentication_failed), Toast.LENGTH_LONG).show()
+                    return
+                }
+                if (flag == INCORRECT_EMAIL) {
+                    Toast.makeText(this.context, this.getText(R.string.invalid_email), Toast.LENGTH_LONG).show()
+                    return
+                }
+                else {
+                    //nav.previousBackStackEntry?.savedStateHandle?.set(AUTH_FLAG, true)
+                    nav.currentBackStackEntry?.savedStateHandle?.set(AUTH_FLAG, email)
+                    nav.previousBackStackEntry?.savedStateHandle?.set(AUTH_FLAG, email)
+                    nav.popBackStack()//nav.navigate(R.id.action_global_navigation_profile)
+                }
+
+            } else {
+                Toast.makeText(this.context, this.getText(R.string.invalid_password), Toast.LENGTH_LONG).show()
+                return
+            }
+        } else {
+            if (email.isNotBlank() && password.isNotBlank()){
+                authViewModel.logIn(email, password, this@AuthFragment)
+                nav.currentBackStackEntry?.savedStateHandle?.set(AUTH_FLAG, email)
+                nav.previousBackStackEntry?.savedStateHandle?.set(AUTH_FLAG, email)
+                nav.popBackStack() //nav.navigate(R.id.action_global_navigation_profile)
+            } else Toast.makeText(this.context, this.getString(R.string.empty_field), Toast.LENGTH_SHORT).show()
         }
-        else authViewModel.logIn(email, password, this@AuthFragment)
-        NavHostFragment.findNavController(this@AuthFragment).popBackStack()
-//        this.onDestroy()//Maybe will change to popBackUp
+
     }
 
     fun updateUI(boolean: Boolean) {

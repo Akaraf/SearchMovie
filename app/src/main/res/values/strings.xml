@@ -1,28 +1,182 @@
 <resources>
     <string name="app_name" translatable="false">Search Movie</string>
-
+    <string name="channel_name" translatable="false">SearchMovie channel</string>
+    <string name="channel_description" translatable="false">Default notification channel</string>
+    <string name="empty_string" translatable="false"></string>
     <string name="title_home">Home</string>
     <string name="title_media">Media</string>
     <string name="title_search">Search</string>
     <string name="title_profile">Profile</string>
+    <string name="no_content">There\'s nothing here yet. Add movies to the collections!</string>
+    <string name="no_content_in_my_persons">There\'s nothing here yet. Add persons to the collections!</string>
 
     <string name="search_clear">Search Clear</string>
     <string name="search_tooltip_text">Movies, serials, persons</string>
-    <string name="category">Category</string>
-    <string name="popular_persons">Popular persons</string>
+    <string name="category">Categories</string>
     <string name="kinopoisk">SearchMovie</string>
     <string name="years">Years</string>
-    <string name="genre">Genre</string>
+    <string name="genre">Genres</string>
     <string name="countries">Countries</string>
+    <string name="tv_series">TV series</string>
+    <string name="awards">Awards</string>
+    <string name="digital_releases">Digital releases</string>
+    <string name="popular_actors">Popular actors</string>
 
+    <string-array name="genres">
+        <item>@string/anime</item>
+        <item>@string/biography</item>
+        <item>@string/detective</item>
+        <item>@string/documentary</item>
+        <item>@string/short_film</item>
+        <item>@string/criminal</item>
+        <item>@string/melodrama</item>
+        <item>@string/musical</item>
+        <item>@string/adventures</item>
+        <item>@string/reality_tv</item>
+        <item>@string/talk_show</item>
+        <item>@string/thriller</item>
+        <item>@string/horror</item>
+        <item>@string/fiction</item>
+    </string-array>
+
+    <string name="anime">Anime</string>
+    <string name="biography">Biography</string>
+    <string name="detective">Detective</string>
+    <string name="documentary">Documentary</string>
+    <string name="short_film">Short film</string>
+    <string name="criminal">Criminal</string>
+    <string name="melodrama">Melodrama</string>
+    <string name="musical">Musical</string>
+    <string name="adventures">Adventures</string>
+    <string name="reality_tv">Reality TV</string>
+    <string name="talk_show">Talk show</string>
+    <string name="thriller">Thriller</string>
+    <string name="horror">Horror</string>
+    <string name="fiction">Science fiction</string>
+    
+    <string-array name="countries">
+        <item>@string/great_britain</item>
+        <item>@string/india</item>
+        <item>@string/spain</item>
+        <item>@string/canada</item>
+        <item>@string/norway</item>
+        <item>@string/russia</item>
+        <item>@string/usa</item>
+        <item>@string/turkey</item>
+        <item>@string/ukraine</item>
+        <item>@string/france</item>
+        <item>@string/sweden</item>
+    </string-array>
+    
+    <string name="great_britain">Great Britain</string>
+    <string name="india">India</string>
+    <string name="spain">Spain</string>
+    <string name="canada">Canada</string>
+    <string name="norway">Norway</string>
+    <string name="russia">Russia</string>
+    <string name="usa">USA</string>
+    <string name="turkey">Turkey</string>
+    <string name="ukraine">Ukraine</string>
+    <string name="france">France</string>
+    <string name="sweden">Sweden</string>
+
+    <string-array name="tv_series">
+        <item>@string/best_series</item>
+        <item>@string/newest_tv_series</item>
+        <item>@string/rus_tv_series</item>
+        <item>@string/best_asia_tv_series</item>
+    </string-array>
+
+    <string name="best_series">100 best TV series</string>
+    <string name="newest_tv_series">TV series of 2020</string>
+    <string name="rus_tv_series">Russian TV series</string>
+    <string name="best_asia_tv_series">The best Asian TV series</string>
+
+    <string-array name="years">
+        <item>@string/movies_of_2020</item>
+        <item>@string/movies_of_2019</item>
+        <item>@string/movies_of_2018</item>
+        <item>@string/movies_of_2017</item>
+        <item>@string/movies_of_2016</item>
+        <item>@string/movies_of_2015</item>
+        <item>@string/movies_from_the_2010s</item>
+        <item>@string/movies_from_the_2000s</item>
+        <item>@string/films_of_the_1990s</item>
+        <item>@string/films_of_the_1980s</item>
+        <item>@string/films_of_the_1970s</item>
+        <item>@string/films_of_the_1960s</item>
+        <item>@string/films_of_the_1950s</item>
+        <item>@string/films_of_the_1940s</item>
+        <item>@string/films_of_the_1930s</item>
+        <item>@string/films_of_the_1920s</item>
+        <item>@string/films_of_the_1910s</item>
+    </string-array>
+
+    <string name="movies_of_2020">Movies of 2020</string>
+    <string name="movies_of_2019">Movies of 2019</string>
+    <string name="movies_of_2018">Movies of 2018</string>
+    <string name="movies_of_2017">Movies of 2017</string>
+    <string name="movies_of_2016">Movies of 2016</string>
+    <string name="movies_of_2015">Movies of 2015</string>
+
+    <string name="movies_from_the_2010s">Movies from the 2010s</string>
+    <string name="movies_from_the_2000s">Movies from the 2000s</string>
+
+    <string name="films_of_the_1990s">Films of the 1990s</string>
+    <string name="films_of_the_1980s">Films of the 1980s</string>
+    <string name="films_of_the_1970s">Films of the 1970s</string>
+    <string name="films_of_the_1960s">Films of the 1960s</string>
+    <string name="films_of_the_1950s">Films of the 1950s</string>
+    <string name="films_of_the_1940s">Films of the 1940s</string>
+    <string name="films_of_the_1930s">Films of the 1930s</string>
+    <string name="films_of_the_1920s">Films of the 1920s</string>
+    <string name="films_of_the_1910s">Films of the 1910s</string>
+
+    
     <string name="my_search_movies">My SearchMovies</string>
-    <string name="my_stars">My stars</string>
+    <string name="my_stars">My persons</string>
     <string name="my_movies">My movies</string>
     <string name="app">App</string>
-    <string name="settings">Settings</string>
     <string name="support_service">Support service</string>
     <string name="history">History</string>
     <string name="logout">Log out</string>
+
+    <string name="settings">Settings</string>
+    <string name="account">Account</string>
+    <string name="synchronize">Synchronize data with your account</string>
+    <string name="synchronize_question">Sync app data with your account?</string>
+    <string name="clear_app">Clear all data in app</string>
+    <string name="clear_app_question">Are you sure you want to clear the app data?</string>
+    <string name="clear_account">Clear all data in your account</string>
+    <string name="clear_account_question">Are you sure you want to clear your account data?</string>
+    <string name="decoration">Decoration</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+    <string name="automatically">Automatically</string>
+    <string name="automatically_detail">The theme changes automatically depending on your device settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="about_app">About the app</string>
+    <string name="license_agreement">License agreement</string>
+    <string name="license_agreement_text">The application is a third-party client of an unofficial API for accessing up-to-date Kinopoisk information ("Kinpoisk Api Unofficial").</string>
+    <string name="viewing_conditions">Viewing conditions</string>
+    <string name="viewing_conditions_text">The application is intended for free introductory viewing of the content of the "Kinopoisk Api Unofficial" service, detailed information on which is located at: "https://kinopoiskapiunofficial.tech". All questions related to the use of the application, as well as possible violations of the law and / or the rights of third parties, should be sent to: flomingaandrej@gmail.com</string>
+    <string name="recommend">Recommend to a friend</string>
+    <string name="search_movie_promo">search for information about movies and TV series online</string>
+    <string name="example_link_app" translatable="false">https://play.google.com/store/apps/details?id=ru.example=ru</string>
+    <string name="version">Version</string>
+    <string name="warning_age">The service may contain information that is not intended for minors</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="message_subject">Message subject</string>
+    <string name="feedback">Feedback</string>
+    <string name="enter_email_support">Enter your email address to get a response</string>
+    <string name="message_for_support_hint">Hello! Describe the situation in detail. We will definitely try to understand and help you.</string>
+    <string name="support_app">Problem with the app</string>
+    <string name="support_content">Uploading content</string>
+    <string name="support_suggestion">Suggestion</string>
+    <string name="support_logging">Problem logging in to your profile</string>
+    <string name="support_other">Other</string>
 
     <string name="compilations">Compilations</string>
     <string name="comedy">Comedy</string>
@@ -35,7 +189,6 @@
     <string name="best">Best films</string>
     <string name="popular">Popular films</string>
     <string name="await">Await films</string>
-    <string name="digital_releases">Digital releases</string>
     <string name="my_films">My films</string>
     <string name="watch_later">Watch later</string>
     <string name="favorite_movies">Favorite movies</string>
@@ -43,12 +196,27 @@
 
     <string name="frames">Frames</string>
     <string name="trailer">Trailer</string>
+    <string name="trailers">Trailers</string>
     <string name="facts">Facts</string>
     <string name="useful">Useful</string>
     <string name="open">Open in KinoPoisk</string>
     <string name="share">Share a link</string>
     <string name="add_to">Add to</string>
+    <string name="actors">Actors</string>
+    <string name="similar_films">Similar films</string>
+    <string name="all_facts">All facts</string>
+    <string name="added_to_watch_later">The movie was added to \"Watch later\" category.</string>
+    <string name="added_to_favorite">The movie was added to \"Favorite movies\" category.</string>
+    <string name="deleted_from_watch_later">The movie was removed from \"Watch later\" category.</string>
+    <string name="deleted_from_favorite">The movie was removed from \"Favorite movies\" category.</string>
     <string name="watch">Watch</string>
+
+    <string name="sequels_prequels">Sequels / Prequels</string>
+    <string name="sequel">Sequel</string>
+    <string name="prequel">Prequel</string>
+    <string name="remake">Remake</string>
+    <string name="unknown">Unknown</string>
+    <string name="no_sequels_prequels">This data is not yet available for this movie.</string>
 
     <string name="create_account">Create Account</string>
     <string name="sign_up">Sign up</string>
@@ -58,7 +226,66 @@
     <string name="or">or</string>
     <string name="confirm_password">Confirm password</string>
     <string name="invalid_password">Invalid password!</string>
+    <string name="empty_field">Email or password field is not filled in!</string>
     <string name="invalid_email">Invalid email!</string>
     <string name="success">Success!</string>
+    <string name="success_auth">You are logged in to your account</string>
     <string name="authentication_failed">Authentication failed!</string>
+    
+    <string name="swipe_toast">Swipe right to delete the movie.</string>
+
+    <string name="birthday">Birthday:</string>
+    <string name="best_works">Best works</string>
+    <string name="add_to_categories">Add to categories</string>
+    <string name="add_person">A person has been added to \"My persons\" category.</string>
+    <string name="delete_person">A person has been deleted from \"My persons\" category.</string>
+    
+    <string name="spouses">Spouses</string>
+
+    <string-array name="count_of_children">
+        <item>@string/one_child</item>
+        <item>@string/two_children</item>
+        <item>@string/three_children</item>
+        <item>@string/four_children</item>
+        <item>@string/five_children</item>
+        <item>@string/six_children</item>
+        <item>@string/seven_children</item>
+        <item>@string/eight_children</item>
+        <item>@string/nine_children</item>
+        <item>@string/ten_children</item>
+    </string-array>
+    <string name="divorce">divorce</string>
+    <string name="one_child">one child</string>
+    <string name="two_children">two children</string>
+    <string name="three_children">three children</string>
+    <string name="four_children">four children</string>
+    <string name="five_children">five children</string>
+    <string name="six_children">six children</string>
+    <string name="seven_children">seven children</string>
+    <string name="eight_children">eight children</string>
+    <string name="nine_children">nine children</string>
+    <string name="ten_children">ten children</string>
+
+    <string name="writer">Writer</string>
+    <string name="operator">Operator</string>
+    <string name="editor">Editor</string>
+    <string name="composer">Composer</string>
+    <string name="producer_ussr">Producer</string>
+    <string name="himself">Himself</string>
+    <string name="herself">Herself</string>
+    <string name="hrono_titr_male">" Titres"</string>
+    <string name="hrono_titr_female">" Titres"</string>
+    <string name="translator">Translator</string>
+    <string name="director">Director</string>
+    <string name="design">Design</string>
+    <string name="producer">Producer</string>
+    <string name="actor">Actor</string>
+    <string name="voice_director">" Voice director"</string>
+
+    <string name="problem_connection">Problems with connecting to the Internet. The application may not work correctly.</string>
+    
+    <string name="title_refresh_notification">More movies and actors</string>
+    <string name="text_refresh_notificatioin">Log in to the app to see the new content</string>
+
+    <string name="allow_autorun">Allow the app to autorun in its settings to receive notifications</string>
 </resources>

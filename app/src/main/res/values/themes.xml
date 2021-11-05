@@ -11,9 +11,23 @@
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/snow</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/white</item>
         <!-- Customize your theme here. -->
         <item name="fontPath">fonts/regular.ttf</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="appBarLayoutStyle">@style/DayAppBarLayout</item>
+        <item name="searchViewStyle">@style/DaySearchView</item>
+    </style>
+
+    <style name="ThemeFactsRecyclerBackground" parent="Theme.SearchMovie">
+        <item name="android:background">@color/snow</item>
+
+    </style>
+
+    <style name="ThemeFactCardBackground" parent="Theme.SearchMovie">
+        <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/black</item>
     </style>
 </resources>

@@ -8,19 +8,13 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.raaf.android.searchmovie.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/empty_string"
         tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_media"
-        android:name="com.raaf.android.searchmovie.ui.media.MediaFragment"
-        android:label="@string/title_media"
-        tools:layout="@layout/fragment_media" />
 
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.raaf.android.searchmovie.ui.search.SearchFragment"
-        android:label="@string/title_search"
+        android:label="@string/empty_string"
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_navigation_search_to_searchResultFragment"
@@ -29,21 +23,30 @@
                 android:name="query"
                 android:defaultValue="none" />
         </action>
+        <action
+            android:id="@+id/action_navigation_search_to_categoryForSearchFragment"
+            app:destination="@id/categoryForSearchFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.raaf.android.searchmovie.ui.profile.ProfileFragment"
-        android:label="@string/title_profile"
+        android:label="@string/empty_string"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_navigation_profile_to_authFragment"
             app:destination="@id/authFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_supportServiceFragment"
+            app:destination="@id/supportServiceFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
         android:name="com.raaf.android.searchmovie.ui.search.SearchResultFragment"
-        android:label="fragment_search_result"
+        android:label="@string/empty_string"
         tools:layout="@layout/fragment_search_result" >
         <argument
             android:name="query"
@@ -53,7 +56,7 @@
     <fragment
         android:id="@+id/filmFragment"
         android:name="com.raaf.android.searchmovie.ui.film.FilmFragment"
-        android:label="FilmFragment"
+        android:label="@string/empty_string"
         tools:layout="@layout/fragment_film" >
         <action
             android:id="@+id/action_filmFragment_to_filmFramesFragment"
@@ -61,16 +64,19 @@
         <action
             android:id="@+id/action_filmFragment_to_trailerFragment"
             app:destination="@id/trailerFragment" />
+        <action
+            android:id="@+id/action_filmFragment_to_sequelsPrequelsFragment"
+            app:destination="@id/sequelsPrequelsFragment" />
     </fragment>
     <action android:id="@+id/action_global_filmFragment" app:destination="@id/filmFragment" />
     <fragment
         android:id="@+id/detailCategoryFragment"
-        android:name="com.raaf.android.searchmovie.ui.home.swipeFragments.DetailCategoryFragment"
-        android:label="DetailCategoryFragment" /><action android:id="@+id/action_global_detailCategoryFragment" app:destination="@id/detailCategoryFragment"/>
+        android:name="com.raaf.android.searchmovie.ui.home.swipeFragments.detailCategory.DetailCategoryFragment"
+        android:label="@string/empty_string" /><action android:id="@+id/action_global_detailCategoryFragment" app:destination="@id/detailCategoryFragment"/>
     <fragment
         android:id="@+id/filmFramesFragment"
         android:name="com.raaf.android.searchmovie.ui.film.FilmFramesFragment"
-        android:label="FilmFramesFragment"
+        android:label="@string/empty_string"
         tools:layout="@layout/fragment_film_frames">
         <action
             android:id="@+id/action_filmFramesFragment_to_filmFramesPagerFragment"
@@ -79,19 +85,19 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.raaf.android.searchmovie.ui.profile.AuthFragment"
-        android:label="AuthFragment" />
+        android:label="@string/empty_string" />
     <fragment
         android:id="@+id/filmFramesPagerFragment"
         android:name="com.raaf.android.searchmovie.ui.film.FilmFramesPagerFragment"
-        android:label="FilmFramesPagerFragment" />
+        android:label="@string/empty_string" />
     <fragment
         android:id="@+id/frameDetailFragment"
         android:name="com.raaf.android.searchmovie.ui.film.FrameDetailFragment"
-        android:label="FrameDetailFragment" />
+        android:label="@string/empty_string" />
     <fragment
         android:id="@+id/trailerFragment"
         android:name="com.raaf.android.searchmovie.ui.film.TrailerFragment"
-        android:label="TrailerFragment" >
+        android:label="@string/empty_string" >
         <action
             android:id="@+id/action_trailerFragment_to_trailerVideoFragment"
             app:destination="@id/trailerVideoFragment" />
@@ -99,5 +105,38 @@
     <fragment
         android:id="@+id/trailerVideoFragment"
         android:name="com.raaf.android.searchmovie.ui.film.TrailerVideoFragment"
-        android:label="TrailerVideoFragment" />
+        android:label="@string/empty_string" />
+    <fragment
+        android:id="@+id/supportServiceFragment"
+        android:name="com.raaf.android.searchmovie.ui.profile.SupportServiceFragment"
+        android:label="@string/empty_string" />
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="com.raaf.android.searchmovie.ui.person.PersonFragment"
+        android:label="@string/empty_string" /><action android:id="@+id/action_global_personFragment" app:destination="@id/personFragment"/>
+    <fragment
+        android:id="@+id/factsFragment"
+        android:name="com.raaf.android.searchmovie.ui.FactsFragment"
+        android:label="@string/empty_string" />
+    <action android:id="@+id/action_global_factsFragment" app:destination="@id/factsFragment" />
+    <fragment
+        android:id="@+id/sequelsPrequelsFragment"
+        android:name="com.raaf.android.searchmovie.ui.film.SequelsPrequelsFragment"
+        android:label="@string/empty_string" />
+    <fragment
+        android:id="@+id/categoryForSearchFragment"
+        android:name="com.raaf.android.searchmovie.ui.search.categoryForSearch.CategoryForSearchFragment"
+        android:label="@string/empty_string" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.raaf.android.searchmovie.ui.profile.SettingsFragment"
+        android:label="@string/empty_string" >
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutAppFragment"
+            app:destination="@id/aboutAppFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutAppFragment"
+        android:name="com.raaf.android.searchmovie.ui.profile.AboutAppFragment"
+        android:label="@string/empty_string" /><action android:id="@+id/action_global_navigation_profile" app:destination="@id/navigation_profile"/>
 </navigation>

@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
             android:id="@+id/user_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -19,10 +20,13 @@
             <TextView
                 android:id="@+id/email"
                 style="@style/TextHead"
+                fontPath="fonts/bold.ttf"
+                tools:ignore="MissingPrefix"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:textSize="@dimen/over_head_text_size"
                 tools:text="andreirafikovv" />
 
             <TextView
@@ -36,6 +40,7 @@
                 tools:text="andreirafikovv@yandex.ru" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_for_auth_image_view"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:elevation="@dimen/margin_12"
@@ -47,6 +52,7 @@
                 app:cardBackgroundColor="@color/secondaryDarkColor"
                 android:background="@color/white"
                 android:layout_centerHorizontal="true">
+
                 <ImageView
                     android:layout_width="54dp"
                     android:layout_height="54dp"
@@ -55,6 +61,18 @@
                     android:layout_gravity="center"
                     android:src="@drawable/user_avatar"/>
             </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_for_auth_image_view" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -73,14 +91,14 @@
             <TextView
                 android:id="@+id/my_films"
                 style="@style/TextD"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/my_films" />
 
             <TextView
                 android:id="@+id/my_stars"
                 style="@style/TextD"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/my_stars" />
 
@@ -95,26 +113,27 @@
             <TextView
                 android:id="@+id/settings"
                 style="@style/TextD"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings" />
 
             <TextView
                 android:id="@+id/support_service"
                 style="@style/TextD"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/support_service" />
 
             <TextView
                 android:id="@+id/history"
                 style="@style/TextD"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/history" />
 
             <Button
                 android:id="@+id/log_button"
+                android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_16"

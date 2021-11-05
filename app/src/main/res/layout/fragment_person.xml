@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/main_layout_person"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/AllMargin16">
+                
+                <ImageView
+                    android:id="@+id/person_image"
+                    android:layout_width="90dp"
+                    android:layout_height="132dp"
+                    android:background="@drawable/round_outline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/splash_screen"/>
+
+                <TextView
+                    android:id="@+id/person_name_ru"
+                    fontPath="fonts/medium.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="16sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/person_image"
+                    app:layout_constraintTop_toTopOf="@+id/person_image"
+                    tools:ignore="MissingPrefix"
+                    tools:text="Арнольд Шварцнеггер" />
+
+                <TextView
+                    android:id="@+id/person_name_en"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/person_image"
+                    app:layout_constraintTop_toBottomOf="@+id/person_name_ru"
+                    tools:text="Arnold Schwarzenegger"/>
+
+                <TextView
+                    android:id="@+id/person_profession"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/person_image"
+                    app:layout_constraintTop_toBottomOf="@+id/person_name_en"
+                    tools:text="Актер, Продюсер, Режиссер"/>
+
+                <TextView
+                    android:id="@+id/person_growth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="13sp"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toEndOf="@+id/person_image"
+                    app:layout_constraintTop_toBottomOf="@+id/person_profession"
+                    tools:text="185 см"/>
+
+                <TextView
+                    android:id="@+id/person_birth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/birthday"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    fontPath="fonts/medium.ttf"
+                    tools:ignore="MissingPrefix"
+                    app:layout_constraintStart_toEndOf="@+id/person_image"
+                    app:layout_constraintTop_toBottomOf="@+id/person_growth"/>
+
+                <TextView
+                    android:id="@+id/person_birth_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/silver"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:textSize="12sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/person_image"
+                    app:layout_constraintTop_toBottomOf="@+id/person_birth"
+                    tools:text="15.06.1973 Альбукерке"/>
+
+                <TextView
+                    android:id="@+id/person_birth_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/silver"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:textSize="12sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/person_image"
+                    app:layout_constraintTop_toBottomOf="@+id/person_birth_1"
+                    tools:text="Нью-Мексико, США (48)"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/facts_layout_person"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/CategoryPadding"
+                        android:background="?android:attr/listDivider"
+                        android:text="@string/facts" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/person_facts"
+                        style="@style/AllMargin16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/all_facts_person"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        fontPath="fonts/medium.ttf"
+                        tools:ignore="MissingPrefix"
+                        style="@style/AllMargin16"
+                        android:text="@string/all_facts"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/spouses_layout_person"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/CategoryPadding"
+                        android:background="?android:attr/listDivider"
+                        android:text="@string/spouses" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/spouses_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider_facts_best_works"
+                    android:layout_width="fill_parent"
+                    android:background="?android:attr/listDivider"
+                    android:layout_height="@dimen/margin_12" />
+
+                <View
+                    android:id="@+id/divider_best_works"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/best_works_layout"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_marginStart="@dimen/margin_16">
+
+                <include
+                    android:id="@+id/best_works_include_layout"
+                    layout="@layout/layout_card_main_category" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CategoryPadding"
+                    android:background="?android:attr/listDivider"
+                    android:text="@string/useful" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/open_person"
+                    style="@style/AllMargin16"
+                    fontPath="fonts/medium.ttf"
+                    tools:ignore="MissingPrefix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/share_person"
+                    fontPath="fonts/medium.ttf"
+                    style="@style/AllMargin16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/share"
+                    tools:ignore="MissingPrefix" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_person"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/add_to"
+        android:elevation="6dp"
+        android:backgroundTint="@color/ic_ref_background"
+        android:src="@drawable/outline_add_24"
+        app:pressedTranslationZ="12dp" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

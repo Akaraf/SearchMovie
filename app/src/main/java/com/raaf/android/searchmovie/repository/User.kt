@@ -14,6 +14,7 @@ private const val SUCCESS_FLAG = "Success"
 private const val ERROR_FLAG = "Error"
 private const val INCORRECT_EMAIL = "Incorrect"
 private const val LOGIN_COMPLETED = "Already"
+private const val MAP_IS_USER_LOGIN = "is"
 private const val MAP_EMAIL = "email"
 private const val MAP_U_NAME = "userName"
 
@@ -25,19 +26,10 @@ class User @Inject constructor(val auth: FirebaseAuth) {
         App.appComponent.inject(this)
     }
 
-    fun getUser() : LiveData<MutableMap<String,String>> {
-        Log.e(TAG, "getUser is run")
-        if (currentUser == null) currentUser = auth.currentUser
-        val list = mutableMapOf<String, String>()
-        list += MAP_EMAIL to currentUser!!.email
-        list += MAP_U_NAME to currentUser!!.email.split("@")[0]
-        //list += MAP_U_ID to currentUser!!.uid
-        //list += MAP_U_ID to currentUser?.displayName
-        //list += MAP_U_ID to currentUser?.photoUrl
-        //currentUser?.isEmailVerified
-        val liveData = MutableLiveData<MutableMap<String,String>>()
-        liveData.value = list
-        return liveData
+    fun getCurrentUser() : LiveData<FirebaseUser> {
+        val resultLiveData = MutableLiveData<FirebaseUser>()
+        resultLiveData.value = auth.currentUser
+        return resultLiveData
     }
 
     fun signIn(email: String, password: String, fragment: Fragment) : String {
@@ -70,12 +62,13 @@ class User @Inject constructor(val auth: FirebaseAuth) {
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(fragment.requireActivity()) { task ->
                                 if (task.isSuccessful) {
-                                    Log.e(TAG, "Registration is success")
+                                    currentUser = auth.currentUser
+                                    //Log.e(TAG, "Registration is success")
                                     result =  SUCCESS_FLAG
                                     currentUser = auth.currentUser
                                 }
                                 else {
-                                    Log.e(TAG, "Registration is error")
+                                    //Log.e(TAG, "Registration is error")
                                     result = ERROR_FLAG
                                 }
                             }

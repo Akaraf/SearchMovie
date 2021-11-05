@@ -12,22 +12,36 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.os.bundleOf
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import com.google.firebase.auth.FirebaseUser
 import com.raaf.android.searchmovie.R
+import com.raaf.android.searchmovie.ui.hideToolbar
 
-private const val TAG = "Profile_Fragment"
+private const val TAG = "ProfileFragment"
 private const val EXTRA_USER_EMAIL = "USER_EMAIL"
 private const val EXTRA_USER_ID = "USER_ID"
 private const val EXTRA_USER_CONDITION = "USER_CONDITION"
+private const val MAP_IS_USER_LOGIN = "is"
 private const val MAP_EMAIL = "email"
 private const val MAP_U_NAME = "userName"
+private const val AUTH_FLAG = "Auth"
+private const val SUPPORT_FLAG = "Support"
+private const val EXTRA_FIRST_TYPE = "firstType"
+private const val EXTRA_SECOND_TYPE = "secondType"
+private const val F_T_WATCHED = "Watched films"
+private const val F_T_MY_FILMS_ALL = "my films"
+private const val F_T_MY_STARS = "my stars"
+
 
 class ProfileFragment : Fragment() {
 
@@ -47,18 +61,26 @@ class ProfileFragment : Fragment() {
     private lateinit var historyTV: TextView
 
     private lateinit var logButton: Button
+    private lateinit var toolbar: Toolbar
 
     private var userEmail = ""
     private var userName = ""
+    private var authEmail = ""
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        profileViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        toolbar = requireActivity().findViewById(R.id.toolbar)
+        hideToolbar(toolbar)
         userLayout = view.findViewById(R.id.user_layout)
         login = view.findViewById(R.id.user_id)
         email = view.findViewById(R.id.email)
@@ -74,49 +96,83 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val nav = NavHostFragment.findNavController(this@ProfileFragment)
+
+        nav.currentBackStackEntry?.savedStateHandle?.getLiveData<String>(AUTH_FLAG)
+                ?.observe(viewLifecycleOwner) {
+                    Log.e(TAG, "!!!!!!!!!!!!!")
+                    Log.e(TAG, it)
+                    if (it.contains("@")) {
+                        authEmail = it
+                        Log.e(TAG, "@")
+                        userEmail = it
+                        userName = it.split("@")[0]
+                        isUserLogIn = true
+                        if (userName.isNotBlank()) updateUI(true, it)
+                    }
+                    makeToastFromAuth("r")
+                }
+
+        nav.currentBackStackEntry?.savedStateHandle?.getLiveData<String>(SUPPORT_FLAG)
+                ?.observe(viewLifecycleOwner) {
+                    Log.e(TAG, "Get result from Support")
+                    makeToastFromSupport(it)
+                }
+
         profileViewModel.firebaseUser.observe(
                 viewLifecycleOwner,
                 Observer { user ->
                     if(user != null) {
                         Log.e(TAG, "User condition is change")
                         isUserLogIn = true
-                        userEmail = user.getValue(MAP_EMAIL)
-                        userName = user.getValue(MAP_U_NAME)
-                        updateUI(isUserLogIn)
-                    } else {
-                        Log.e(TAG, "User condition is change and its NULL")
+                        if (user.email.isNotBlank() && authEmail.isBlank()) {
+                            userEmail = user.email
+                            userName = user.email.split("@")[0]
+                        }
                     }
+                    if (userName.isNotBlank()) updateUI(isUserLogIn, null)
                 }
         )
 
         myFilmsTV.setOnClickListener {
-//            it.findNavController().navigate()
+            var bundle = bundleOf(EXTRA_SECOND_TYPE to F_T_MY_FILMS_ALL, EXTRA_FIRST_TYPE to F_T_MY_FILMS_ALL)
+            nav.navigate(R.id.action_global_detailCategoryFragment, bundle)
+        }
+
+        myStarsTV.setOnClickListener {
+            var bundle = bundleOf(EXTRA_SECOND_TYPE to F_T_MY_STARS, EXTRA_FIRST_TYPE to F_T_MY_STARS)
+            nav.navigate(R.id.action_global_detailCategoryFragment, bundle)
+        }
+
+        historyTV.setOnClickListener {
+            var bundle = bundleOf(EXTRA_SECOND_TYPE to F_T_WATCHED, EXTRA_FIRST_TYPE to F_T_WATCHED)
+            nav.navigate(R.id.action_global_detailCategoryFragment, bundle)
+        }
+
+        supportTV.setOnClickListener {
+            var bundle = bundleOf(MAP_EMAIL to userEmail)
+            nav.navigate(R.id.action_navigation_profile_to_supportServiceFragment, bundle)
+        }
+
+        settingsTV.setOnClickListener {
+            nav.navigate(R.id.action_navigation_profile_to_settingsFragment)
         }
 
         logButton.setOnClickListener {
             if (isUserLogIn) {
                 isUserLogIn = false
-                updateUI(isUserLogIn)
+                updateUI(isUserLogIn, null)
                 profileViewModel.logOut()
             }
             else {
-                isUserLogIn = true //its will be not consistent value if user is not logged in authFragment
-                NavHostFragment.findNavController(this@ProfileFragment).navigate(R.id.action_navigation_profile_to_authFragment)
+                profileViewModel.firebaseUser.removeObservers(viewLifecycleOwner)
+                nav.navigate(R.id.action_navigation_profile_to_authFragment)
             }
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        //Check if user is signed in
-        profileViewModel.getUser()
-    }
-
-    fun setUserAvatar() {
-        //this method will be use if ill add users avatar in app
-    }
-
-    private fun updateUI(boolean: Boolean) {
+    private fun updateUI(boolean: Boolean, fromAuth: String?) {
         if (!boolean) {
             Log.e(TAG, "update UI is running. Run with false variant")
             logButton.setText(R.string.sign_in)
@@ -126,9 +182,28 @@ class ProfileFragment : Fragment() {
         } else {
             Log.e(TAG, "update UI is running. Run with true variant")
             logButton.setText(R.string.logout)
-            email.text = userName
-            login.text = userEmail
+            if (fromAuth != null) {
+                email.text = fromAuth.split("@")[0]
+                login.text = fromAuth
+            } else {
+                email.text = userName
+                login.text = userEmail
+            }
             userLayout.visibility = VISIBLE
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        hideToolbar(toolbar)
+    }
+
+    fun makeToastFromAuth(result: String) {
+        Toast.makeText(requireContext(), getText(R.string.success_auth), Toast.LENGTH_LONG).show()
+    }
+
+    fun makeToastFromSupport(result: String) {
+        Toast.makeText(requireContext(), getText(R.string.success), Toast.LENGTH_LONG).show()
+    }
+
 }

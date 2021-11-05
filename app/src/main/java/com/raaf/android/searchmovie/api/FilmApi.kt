@@ -1,6 +1,7 @@
 package com.raaf.android.searchmovie.api
 
 import com.google.gson.JsonElement
+import com.raaf.android.searchmovie.dataModel.StaffPerson
 import com.raaf.android.searchmovie.dataModel.rootJSON.*
 import retrofit2.Call
 import retrofit2.http.GET
@@ -28,8 +29,8 @@ interface FilmApi {
     fun fetchStudios(@Path(value = "id", encoded = true) id: Int) : Call<JsonElement>
 
 //    Сиквелы и приквелы по фильму(5)
-    @GET("api/v2.1/films/{id}/sequels-and-prequels")
-    fun fetchSequelsAndPrequels(@Path(value = "id", encoded = true) id: Int) : Call<JsonElement>
+    @GET("api/v2.1/films/{id}/sequels_and_prequels")
+    fun fetchSequelsAndPrequels(@Path(value = "id", encoded = true) id: Int) : Call<List<SequelsPrequelsResponse>>
 
 //    Спсиок фильмов по фразе(6)
     @GET("api/v2.1/films/search-by-keyword")
@@ -57,7 +58,11 @@ interface FilmApi {
     fun fetchTop(@Query("type") type: String,
                  @Query("page") page: Int) : Call<SearchByFilters>
 
-//    Цифровые релизы(10)
+//    Похожие фильмы(10)
+    @GET("api/v2.2/films/{id}/similars")
+    fun fetchSimilarsMovieByFilmId(@Path(value = "id", encoded = true) id: Int) : Call<RelatedFilmResponse>
+
+//    Цифровые релизы(11)
     @GET("api/v2.1/films/releases")
     fun fetchReleases(@Query("year") year: Int,
                       @Query("month") month: String,
@@ -66,23 +71,23 @@ interface FilmApi {
 
 
 //    Reviews
-//    Общая инфа об отзывах(11)
+//    Общая инфа об отзывах(12)
     @GET("api/v1/reviews")
     fun fetchReviews(@Query("filmId") filmId: Int,
                      @Query("page") page: Int) : Call<JsonElement>
 
-//    Отзывы по фильму(12)
+//    Отзывы по фильму(13)
     @GET("api/v2.1/films/details")
     fun fetchDetailReviews(@Query("reviewId") reviewId: Int) : Call<JsonElement>
 
 
 
 //    Staff
-//    Студии по фильму(13)
+//    Студии по фильму(14)
     @GET("api/v1/staff")
-    fun fetchStaffByMovieId(@Query("filmId") filmId: Int) : Call<JsonElement>
+    fun fetchStaffByMovieId(@Query("filmId") filmId: Int) : Call<List<StaffPerson>>
 
-//    Персона по id(14)
+//    Персона по id(15)
     @GET("api/v1/staff/{id}")
-    fun fetchStaffByPersonId(@Path(value = "id", encoded = true) id: Int) : Call<JsonElement>
+    fun fetchStaffByPersonId(@Path(value = "id", encoded = true) id: Int) : Call<PersonResponse>
 }

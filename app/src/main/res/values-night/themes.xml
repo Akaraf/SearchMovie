@@ -1,16 +1,33 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.SearchMovie" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.SearchMovie" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/snow</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorPrimaryVariant">@color/silver</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/light_gray</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/light_gray</item>
         <item name="colorSecondaryVariant">@color/gray</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/snow</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/dark_gray</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
         <!-- Customize your theme here. -->
+        <item name="fontPath">fonts/regular.ttf</item>
+        <item name="android:textColor">@color/silver</item>
+        <item name="appBarLayoutStyle">@style/NightAppBarLayout</item>
+        <item name="searchViewStyle">@style/NightSearchView</item>
+        <item name="bottomNavigationStyle">@style/NightBottomNavigation</item>
+    </style>
+
+    <style name="ThemeFactsRecyclerBackground" parent="Theme.SearchMovie">
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+
+    <style name="ThemeFactCardBackground" parent="Theme.SearchMovie">
+        <item name="android:background">@color/gray</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

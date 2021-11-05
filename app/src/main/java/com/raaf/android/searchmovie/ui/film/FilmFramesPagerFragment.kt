@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.dataModel.Frame
+import com.raaf.android.searchmovie.ui.showToolbar
 
 private const val TAG = "FilmFramesPagerFragment"
 private const val EXTRA_INITIAL_ITEM_POS = "position"
@@ -23,22 +24,10 @@ class FilmFramesPagerFragment : Fragment() {
     private var currentItem = 0
     private lateinit var frames: ArrayList<Frame>
 
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        postponeEnterTransition()
-        //Maybe, ill add this code for lollipop
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            sharedElementEnterTransition()
-//        }
-//        sharedElementReturnTransition = null
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_film_frames_pager, container, false)
         framesViewpager = view.findViewById(R.id.frames_view_pager)
+        showToolbar(requireActivity().findViewById(R.id.toolbar), "")
         currentItem = requireArguments().getInt(EXTRA_INITIAL_ITEM_POS, 0)
         frames = requireArguments().getParcelableArrayList<Frame>(EXTRA_FRAME_ITEMS)!!
         return view

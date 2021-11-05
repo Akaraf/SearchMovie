@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.raaf.android.searchmovie.App
+import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.dataModel.rootJSON.SearchByKeyword
-import com.raaf.android.searchmovie.repository.AppRepository
 import javax.inject.Inject
 
 class SearchResultViewModel : ViewModel() {
 
-    @Inject lateinit var appRepository: AppRepository
+    @Inject lateinit var filmFetcher: FilmFetcher
     val resultSearchLiveData: LiveData<SearchByKeyword>
     private val mutableSearchTermKeyword = MutableLiveData<String>()
     private val mutableSearchTermPage = MutableLiveData<Int>()
@@ -20,7 +20,7 @@ class SearchResultViewModel : ViewModel() {
         App.appComponent.inject(this)
 
         resultSearchLiveData = Transformations.switchMap(mutableSearchTermKeyword) { searchTerm ->
-            appRepository.getSearchByKeyword(searchTerm, mutableSearchTermPage.value?: 1)
+            filmFetcher.getSearchByKeyword(searchTerm, mutableSearchTermPage.value?: 1)
         }
     }
 

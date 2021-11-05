@@ -8,5 +8,5 @@ import com.raaf.android.searchmovie.database.dao.MyFilmsDao
 @Database(entities = arrayOf(Movie::class), version = 1, exportSchema = false)
 abstract class MyFilmsDatabase : RoomDatabase() {
 
-    abstract fun myFilmsDao(): MyFilmsDao
+    abstract fun myFilmsDao() : MyFilmsDao
 }

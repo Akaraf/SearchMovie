@@ -19,12 +19,16 @@
 
     <EditText
         android:id="@+id/edit_login"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionDone"
         android:hint="@string/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <EditText
         android:id="@+id/edit_password"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
         android:hint="@string/password"
         android:layout_marginTop="@dimen/margin_16"
         android:layout_width="match_parent"
@@ -32,6 +36,8 @@
 
     <EditText
         android:id="@+id/edit_confirm_password"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
         android:hint="@string/confirm_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

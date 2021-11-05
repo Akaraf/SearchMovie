@@ -1,13 +1,19 @@
 package com.raaf.android.searchmovie.ui.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.raaf.android.searchmovie.App
+import com.raaf.android.searchmovie.api.FilmFetcher
+import javax.inject.Inject
 
 class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    @Inject lateinit var filmFetcher: FilmFetcher
+
+    init {
+        App.appComponent.inject(this)
     }
-    val text: LiveData<String> = _text
 }

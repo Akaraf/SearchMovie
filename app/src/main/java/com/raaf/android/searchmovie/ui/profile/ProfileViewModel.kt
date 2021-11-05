@@ -18,23 +18,13 @@ class ProfileViewModel : ViewModel() {
     @Inject lateinit var user: User//remove later
     @Inject lateinit var preferences: SharedPreferences
 
-    val firebaseUser: LiveData<MutableMap<String,String>>
+    val firebaseUser: LiveData<FirebaseUser>
     private val mutableUserCondition = MutableLiveData<Boolean>()
 
     init {
         mutableUserCondition.value = false
         App.appComponent.inject(this)
-        firebaseUser = Transformations.switchMap(mutableUserCondition) {
-            user.getUser()
-        }
-    }
-
-    fun getUser() {
-        Log.e(TAG, "fun getUser is run:")
-        var boolean = mutableUserCondition.value
-        if (boolean == null) boolean = false
-        mutableUserCondition.value != boolean
-        Log.e(TAG, "boolean is $boolean,    condition is    ${mutableUserCondition.value}")
+        firebaseUser = user.getCurrentUser()
     }
 
     fun logOut() {

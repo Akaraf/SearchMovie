@@ -18,8 +18,14 @@ interface FilmSwipeItemDao : BaseDao<FilmSwipeItem>{
     @Transaction @Query("SELECT * FROM filmstop")
     fun loadAll() : LiveData<List<FilmSwipeItem>>
 
+    @Query("SELECT * FROM filmstop WHERE forHome = (:booleanFlag)")
+    fun loadForCompilation(booleanFlag: Boolean) : LiveData<List<FilmSwipeItem>>
+
     @Transaction @Query("SELECT * FROM filmstop")
     fun getAll() : List<FilmSwipeItem>
+
+    @Transaction @Query("SELECT COUNT(filmId) FROM filmstop")
+    fun getCount() : Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun insert(filmSwipeItem: List<FilmSwipeItem>)

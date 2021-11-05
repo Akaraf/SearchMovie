@@ -1,9 +1,12 @@
 package com.raaf.android.searchmovie.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -16,12 +19,14 @@ import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.ui.home.swipeFragments.CompilationFragment
 import com.raaf.android.searchmovie.ui.home.swipeFragments.MyFilmsFragment
 import com.raaf.android.searchmovie.ui.home.swipeFragments.TopFragment
+import java.util.concurrent.Executors
 
 private const val TAG = "Search Result Fragment"
 //You need to check 544 page in heeead, before you will going to next step
 
 class HomeFragment : Fragment() {
 
+    private lateinit var toolbar: Toolbar
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
@@ -32,7 +37,11 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        viewPager = view.findViewById(R.id.frames_view_pager)
+        toolbar = requireActivity().findViewById(R.id.toolbar)
+        toolbar.visibility = GONE
+//        homeToolbar = view.findViewById(R.id.toolbar_home)
+        viewPager = view.findViewById(R.id.home_view_pager)
+        viewPager.isUserInputEnabled = false
         tabLayout = view.findViewById(R.id.tab_layout)
         return view
     }

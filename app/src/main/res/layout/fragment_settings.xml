@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AllMargin16"
+    android:overScrollMode="never"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            fontPath="fonts/medium.ttf"
+            tools:ignore="MissingPrefix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TopBottomMargin16"
+            android:text="@string/account"
+            android:textColor="@color/silver"/>
+
+        <TextView
+            android:id="@+id/synchronize_with_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TopBottomPadding16"
+            android:text="@string/synchronize"/>
+
+        <TextView
+            android:id="@+id/clear_app_data"
+            android:text="@string/clear_app"
+            style="@style/TopBottomPadding16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/clear_account_data"
+            android:text="@string/clear_account"
+            style="@style/TopBottomPadding16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            fontPath="fonts/medium.ttf"
+            tools:ignore="MissingPrefix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TopBottomMargin16"
+            android:text="@string/decoration"
+            android:textColor="@color/silver"/>
+
+        <TextView
+            android:id="@+id/dark_theme_setting"
+            style="@style/TopBottomPadding16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            fontPath="fonts/medium.ttf"
+            tools:ignore="MissingPrefix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TopBottomMargin16"
+            android:text="@string/about_app"
+            android:textColor="@color/silver"/>
+
+        <TextView
+            android:id="@+id/license_agreement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TopBottomPadding16"
+            android:text="@string/license_agreement"/>
+
+        <TextView
+            android:id="@+id/viewing_conditions"
+            android:text="@string/viewing_conditions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TopBottomPadding16"/>
+
+        <TextView
+            android:id="@+id/recommend"
+            android:text="@string/recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TopBottomPadding16"/>
+
+        <TextView
+            android:id="@+id/version_app"
+            android:layout_marginTop="@dimen/margin_24"
+            android:layout_marginBottom="@dimen/margin_16"
+            android:textColor="@color/silver"
+            fontPath="fonts/medium.ttf"
+            tools:ignore="MissingPrefix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/warning_age"
+            style="@style/TopBottomMargin16"
+            android:textColor="@color/silver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:paddingStart="@dimen/margin_16"
+            android:paddingEnd="@dimen/margin_16"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

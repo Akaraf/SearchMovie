@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardP"
+        android:layout_width="64dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="@dimen/margin_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="6dp">
+
+        <ImageView
+            android:id="@+id/image_person"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/avatars"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/name_ru_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fontPath="fonts/medium.ttf"
+        tools:ignore="MissingPrefix"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintStart_toEndOf="@+id/cardP"
+        app:layout_constraintTop_toTopOf="@+id/cardP"
+        tools:text="Сильвестр Сталлоне"/>
+
+    <TextView
+        android:id="@+id/name_en_person"
+        fontPath="fonts/light.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constrainedWidth="true"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/cardP"
+        app:layout_constraintTop_toBottomOf="@+id/name_ru_person"
+        tools:ignore="MissingPrefix"
+        tools:text="Silvester Stallone" />
+
+    <TextView
+        android:id="@+id/profession_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/silver"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/cardP"
+        app:layout_constraintTop_toBottomOf="@+id/name_en_person"
+        tools:text="Актер" />
+
+    <View
+        android:id="@+id/card_person_divider_end"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/name_ru_person" />
+
+    <View
+        android:id="@+id/card_person_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/name_ru_person" />
+</androidx.constraintlayout.widget.ConstraintLayout>

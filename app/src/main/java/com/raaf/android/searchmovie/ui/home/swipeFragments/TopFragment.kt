@@ -15,6 +15,7 @@ import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmsCategoryItem
 
 private const val TAG = "TopFragment"
+private const val F_T_TOP = "Top"
 
 class TopFragment : Fragment() {
 
@@ -51,7 +52,7 @@ class TopFragment : Fragment() {
                         if(it.parentId == nameTop[2]) list3.add(it)}
                     Log.e(TAG, "list1=${list1.size},  list2=${list2.size},  list3=${list3.size}")
                     val listCategory = listOf(FilmsCategoryItem(nameTop[0], list1), FilmsCategoryItem(nameTop[1], list2), FilmsCategoryItem(nameTop[2], list3))
-                    topRecyclerView.adapter = FilmsCategoryItemAdapter(listCategory)
+                    topRecyclerView.adapter = FilmsCategoryItemAdapter(listCategory, F_T_TOP, null)
                 }
         )
 //        requireArguments().getString("name")?.let {  }

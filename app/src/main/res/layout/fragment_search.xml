@@ -1,56 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.search.SearchFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/category_text"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/category"/>
+        android:layout_marginTop="@dimen/margin_4"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16">
 
-
-        <GridLayout
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/s_search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2">
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_tooltip_text"
+            app:searchIcon="@drawable/s_search_im"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        style="@style/AllMargin16"
+        android:layout_marginEnd="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/digital_releases_include_layout"
+            layout="@layout/layout_card_main_category" />
+
+        <TextView
+            android:id="@+id/categories_tv"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_16"
+            android:text="@string/category"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            fontPath="fonts/bold.ttf"
+            tools:ignore="MissingPrefix"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginBottom="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/kinopoisk_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_shape_button"
-                android:text="@string/kinopoisk"/>
+                android:text="@string/kinopoisk"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/years_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:background="@drawable/round_shape_button"
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
-                android:background="@drawable/round_shape_button"
-                android:text="@string/years"/>
+                android:text="@string/years"
+                app:layout_constraintStart_toEndOf="@+id/kinopoisk_button"
+                app:layout_constraintTop_toTopOf="@+id/kinopoisk_button" />
 
             <Button
-                android:id="@+id/genre_button"
+                android:id="@+id/genres_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
                 android:background="@drawable/round_shape_button"
-                android:text="@string/genre"/>
+                android:text="@string/genre"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/kinopoisk_button" />
 
             <Button
                 android:id="@+id/countries_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:background="@drawable/round_shape_button"
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
+                android:text="@string/countries"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genres_button" />
+
+            <Button
+                android:id="@+id/tv_series_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8"
                 android:background="@drawable/round_shape_button"
-                android:text="@string/countries"/>
+                android:text="@string/tv_series"
+                app:layout_constraintStart_toEndOf="@+id/genres_button"
+                app:layout_constraintTop_toTopOf="@+id/genres_button" />
 
-        </GridLayout>
+            <Button
+                android:id="@+id/awards_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8"
+                android:background="@drawable/round_shape_button"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@string/awards"
+                app:layout_constraintStart_toEndOf="@+id/countries_button"
+                app:layout_constraintTop_toTopOf="@+id/countries_button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+        <include
+            android:id="@+id/actors_include_layout"
+            layout="@layout/layout_card_main_category" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

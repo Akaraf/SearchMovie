@@ -1,17 +1,18 @@
 package com.raaf.android.searchmovie.di.modules
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(AppModule::class))
+@Module
 class AppPreferencesModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(context: Context) : SharedPreferences {
-        return context.getSharedPreferences("APP_PREFERENCES", Context.MODE_PRIVATE)
+    fun provideSharedPreferences(app: Application) : SharedPreferences {
+        return app.applicationContext.getSharedPreferences("APP_PREFERENCES", 0/*context.MODE_PRIVATE value*/)
     }
 }

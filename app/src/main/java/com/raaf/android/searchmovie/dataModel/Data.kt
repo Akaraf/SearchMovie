@@ -2,8 +2,8 @@ package com.raaf.android.searchmovie.dataModel
 
 data class Data(
         val filmId : Int,
-        val nameRu : String,
-        val nameEn : String,
+        val nameRu : String? = "",
+        var nameEn : String? = "",
         val webUrl : String,
         val posterUrl : String,
         val posterUrlPreview : String,
@@ -25,5 +25,5 @@ data class Data(
         val countries : List<Countries>,
         val genres : List<Genres>,
         val facts : List<String>,
-        val seasons : List<String>
+        //val seasons : List<String>
 )

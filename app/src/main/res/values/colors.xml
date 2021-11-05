@@ -2,8 +2,10 @@
 <resources>
     <color name="orange">#FFFF6600</color>
     <color name="black">#FF000000</color>
+    <color name="light_black">#FF383838</color>
     <color name="gray">#FF333333</color>
     <color name="light_gray">#FF777777</color>
+    <color name="dark_gray">#121212</color>
     <color name="silver">#FFAAAAAA</color>
     <color name="snow">#FFF2F2F2</color>
     <color name="white">#FFFFFFFF</color>
@@ -11,8 +13,10 @@
     <color name="primaryColor">#ff983f</color>
     <color name="primaryLightColor">#ffc96e</color>
     <color name="primaryDarkColor">#c76907</color>
+
     <color name="secondaryColor">#f2f2f2</color>
     <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDividerColor">#eeeeee</color>
     <color name="secondaryDarkColor">#bfbfbf</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>

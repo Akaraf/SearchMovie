@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/card_layout_trailer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,6 +13,8 @@
     <TextView
         android:id="@+id/name_video"
         android:layout_width="wrap_content"
+        fontPath="fonts/medium.ttf"
+        tools:ignore="MissingPrefix"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_8"
         tools:text="Не грози южному централу попивая сок в че..." />
@@ -27,5 +30,6 @@
         android:id="@+id/watch_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_16"
         android:text="@string/watch"/>
 </LinearLayout>

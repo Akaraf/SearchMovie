@@ -7,7 +7,7 @@ import java.util.stream.Collectors
 
 class ListStringConverter {
 
-    @RequiresApi(Build.VERSION_CODES.N)
+
     @TypeConverter
     fun fromList(list: List<String>) : String {
         return list.stream().collect(Collectors.joining(" ,  "))
