@@ -9,9 +9,9 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.raaf.android.searchmovie.App
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.dataModel.Movie
 import com.raaf.android.searchmovie.dataModel.rootJSON.PersonResponse
+import com.raaf.android.searchmovie.repository.FilmRepo
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
@@ -39,7 +39,7 @@ private const val EXTRA_ITEM_ID = "itemId"
 
 class FirebaseStorageService : Service() {
 
-    @Inject lateinit var filmFetcher: FilmFetcher
+    @Inject lateinit var filmRepo: FilmRepo
     @Inject lateinit var firestore: FirebaseFirestore
     @Inject lateinit var auth: FirebaseAuth
     private var movie: Movie? = null
@@ -163,17 +163,17 @@ class FirebaseStorageService : Service() {
 
     private fun synchronizeUserDataWithApp() {
         executor.execute {
-            val watchParentName = filmFetcher.getWatchParentName()
+            val watchParentName = filmRepo.getWatchParentName()
 
             val watchFromDB = mutableListOf<Movie>()
             val favoritesFromDB = mutableListOf<Movie>()
-            val personsFromDB = filmFetcher.myPersonsDao.getAll()
+            val personsFromDB = filmRepo.myPersonsDao.getAll()
 
             val personsFromStorage = getAllPersonsFromStorage(false) as MutableList<PersonResponse>
             val favoriteFromStorage = getAllFavoriteFilmsFromStorage(false) as MutableList<Movie>
             val watchFromStorage = getAllWatchFilmsFromStorage(false) as MutableList<Movie>
 
-            for (movie in filmFetcher.myFilmsDao.getAll()) {
+            for (movie in filmRepo.myFilmsDao.getAll()) {
                 if (movie.parent.contains(watchParentName)) watchFromDB.add(movie)
                 else favoritesFromDB.add(movie)
             }
@@ -200,15 +200,15 @@ class FirebaseStorageService : Service() {
     }
 
     private fun addPersonsToAppDB(persons: MutableList<PersonResponse>) {
-        filmFetcher.myPersonsDao.insert(persons)
+        filmRepo.myPersonsDao.insert(persons)
     }
 
     private fun addWatchMoviesToAppDB(movies: MutableList<Movie>) {
-        filmFetcher.myFilmsDao.insert(movies)
+        filmRepo.myFilmsDao.insert(movies)
     }
 
     private fun addFavoriteMoviesToAppDB(movies: MutableList<Movie>) {
-        filmFetcher.myFilmsDao.insert(movies)
+        filmRepo.myFilmsDao.insert(movies)
     }
 
     //Может возникнуть траблы с пустыми ретернами в гетах. По возможности стоит уубрать хэндлеры из clearAllUserData

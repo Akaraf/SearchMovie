@@ -1,22 +1,21 @@
 package com.raaf.android.searchmovie.ui.person
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.raaf.android.searchmovie.App
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
 import com.raaf.android.searchmovie.dataModel.rootJSON.PersonResponse
+import com.raaf.android.searchmovie.repository.FilmRepo
 import javax.inject.Inject
 
 private const val TAG = "PersonViewModel"
 
 class PersonViewModel : ViewModel() {
 
-    @Inject lateinit var filmFetcher: FilmFetcher
+    @Inject lateinit var repository: FilmRepo
     val personLiveData: LiveData<PersonResponse>
     private val personId = MutableLiveData<Int>()
     val bestWorksLiveData: LiveData<List<FilmSwipeItem>>
@@ -27,20 +26,20 @@ class PersonViewModel : ViewModel() {
         App.appComponent.inject(this)
 
         personLiveData = Transformations.switchMap(personId) { personId ->
-            filmFetcher.fetchPersonById(personId, false)
+            repository.fetchPersonById(personId, false)
         }
 
         bestWorksLiveData = Transformations.switchMap(filmsId) { list ->
-            filmFetcher.getBestWorksForPerson()
+            repository.getBestWorksForPerson()
         }
 
         statusFloatingButton = Transformations.switchMap(personId) { id ->
-            filmFetcher.checkPersonInMyPersonDB(id)
+            repository.checkPersonInMyPersonDB(id)
         }
     }
 
     fun fetchBestWorks(list: List<Int>) {
-        filmFetcher.setBestWorksForPerson(list)
+        repository.setBestWorksForPerson(list)
         filmsId.value = list
     }
 
@@ -49,20 +48,20 @@ class PersonViewModel : ViewModel() {
     }
 
     fun clearBestWorksCache() {
-        filmFetcher.clearPersonCache()
+        repository.clearPersonCache()
     }
 
     fun addToMyPerson(personId: Int) {
         //Log.e(TAG, personResponse.toString())
-        filmFetcher.fetchPersonById(personId, true)
+        repository.fetchPersonById(personId, true)
     }
 
     fun deleteToMyPerson(id: Int) {
         Log.e(TAG, id.toString())
-        filmFetcher.deletePersonFromMyPersonsDB(id)
+        repository.deletePersonFromMyPersonsDB(id)
     }
 
     fun checkSpouse(personId: Int) : Boolean {
-        return filmFetcher.checkSpouse(personId)
+        return repository.checkSpouse(personId)
     }
 }

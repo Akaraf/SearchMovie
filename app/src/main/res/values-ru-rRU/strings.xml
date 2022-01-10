@@ -193,4 +193,5 @@
     <string name="no_content_in_my_persons">Здесь пока ничего нет. Добавьте персон в подборки!</string>
     <string name="message_subject">Тема сообщения</string>
     <string name="feedback">Обратная связь</string>
+    <string name="error">Ошибка</string>
 </resources>

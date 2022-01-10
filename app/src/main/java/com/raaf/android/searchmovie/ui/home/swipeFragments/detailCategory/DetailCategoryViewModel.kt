@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.raaf.android.searchmovie.App
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
 import com.raaf.android.searchmovie.dataModel.rootJSON.PersonResponse
+import com.raaf.android.searchmovie.repository.FilmRepo
 import javax.inject.Inject
 
 private const val TAG = "DetailCategoryViewModel"
@@ -20,7 +20,7 @@ private const val F_T_CATEGORIES = "Categories"
 
 class DetailCategoryViewModel : ViewModel() {
 
-    @Inject lateinit var filmFetcher: FilmFetcher
+    @Inject lateinit var repository: FilmRepo
     var resultLiveData: LiveData<List<FilmSwipeItem>>? = null
     var resultLiveDataForPersonResponse: LiveData<MutableList<PersonResponse>>? = null
     private var favoriteMoviesCategory = ""
@@ -36,22 +36,22 @@ class DetailCategoryViewModel : ViewModel() {
         Log.e(TAG, "ft:$firstType, st:$secondType")
         when {
             (firstType == F_T_COMPILATION) -> {
-                resultLiveData = filmFetcher.setCompilationForDetails(secondType)
+                resultLiveData = repository.setCompilationForDetails(secondType)
             }
             (firstType == F_T_TOP) -> {
-                resultLiveData = filmFetcher.setTop()
+                resultLiveData = repository.setTop()
             }
             (firstType == F_T_MY_FILMS || firstType == F_T_MY_FILMS_ALL) -> {
-                resultLiveData = filmFetcher.setMyFilms()
+                resultLiveData = repository.setMyFilms()
             }
             (firstType == F_T_WATCHED) -> {
-                resultLiveData = filmFetcher.setWatched()
+                resultLiveData = repository.setWatched()
             }
             (firstType == F_T_MY_STARS) -> {
-                resultLiveDataForPersonResponse = filmFetcher.setMyPerson()
+                resultLiveDataForPersonResponse = repository.setMyPerson()
             }
             (firstType == F_T_CATEGORIES) -> {
-                resultLiveData = filmFetcher.setCategory()
+                resultLiveData = repository.setCategory()
             }
         }
     }
@@ -64,16 +64,16 @@ class DetailCategoryViewModel : ViewModel() {
     }
 
     fun deleteFromDB(endId: String, categoryName: String) {
-        if (categoryName == favoriteMoviesCategory || categoryName == watchLaterCategory) filmFetcher.deleteMovieFromMyFilmsDb(endId)
+        if (categoryName == favoriteMoviesCategory || categoryName == watchLaterCategory) repository.deleteMovieFromMyFilmsDb(endId)
         //if (categoryName == historyCategory) filmFetcher.deleteMovieFromHistoryDb(endId)
-        if (categoryName == myPersonsCategory) filmFetcher.deletePersonFromMyPersonsDB(endId.toInt())
+        if (categoryName == myPersonsCategory) repository.deletePersonFromMyPersonsDB(endId.toInt())
     }
 
     fun fetchCategoryFilms(categoryName: String, categoryItemName: String) {
-        filmFetcher.getCategoryCache(categoryName, categoryItemName)
+        repository.getCategoryCache(categoryName, categoryItemName)
     }
 
     fun clearCategoryCacheDB() {
-        filmFetcher.clearCategoryFilmsCacheDb()
+        repository.clearCategoryFilmsCacheDb()
     }
 }

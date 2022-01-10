@@ -12,25 +12,35 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.dataModel.rootJSON.MovieById
 import com.raaf.android.searchmovie.backgroundJob.services.FirebaseStorageService
+import com.raaf.android.searchmovie.dataModel.SimilarFilm
+import com.raaf.android.searchmovie.dataModel.StaffPerson
 import com.raaf.android.searchmovie.ui.MainActivity
 import com.raaf.android.searchmovie.ui.adapters.PopularPersonAdapter
 import com.raaf.android.searchmovie.ui.adapters.SimilarFilmsAdapter
-import com.raaf.android.searchmovie.ui.showToolbar
+import com.raaf.android.searchmovie.ui.extensions.lazyViewModel
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 private const val TAG = "FilmFragment"
 private const val EXTRA_ITEM_ID = "itemId"
-private const val EXTRA_FILM_ID = "filmId"
+private const val EXTRA_MOVIE_ID = "filmId"
 private const val EXTRA_FACTS_TEXT = "facts"
 private const val TYPE_COLLECTION = "type"
 private const val ADD_WATCH_LATER_COLLECTION = "AWLC"
@@ -41,11 +51,13 @@ private const val DELETE_FAVORITE_COLLECTION = "DF"
 
 class FilmFragment : Fragment(), OnBackPressedListener {
 
-    var filmId: Int = 0
     var addVariants = listOf("Watch later", "Favorite movies")
-    private lateinit var filmViewModel: FilmViewModel
     private lateinit var movieCurrent: MovieById
     private var isOpen = false
+
+    private val filmViewModel by lazyViewModel {
+        App.appComponent.filmVM().create(it)
+    }
 
     private lateinit var floatingButton: FloatingActionButton
     private lateinit var mainLayout: LinearLayout
@@ -91,10 +103,10 @@ class FilmFragment : Fragment(), OnBackPressedListener {
     private lateinit var nonSimilarGrayDivFacts: View
 
     private lateinit var sequelsPrequels: TextView
+    private val IOCoroutineContext: CoroutineContext = Dispatchers.IO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        filmViewModel = ViewModelProvider(this).get(FilmViewModel::class.java)
         if (activity != null) {
             (activity as MainActivity).getBackPressedListener(this)
         }
@@ -143,69 +155,51 @@ class FilmFragment : Fragment(), OnBackPressedListener {
         sequelsPrequels = view.findViewById(R.id.sequels_prequels)
         actorsRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         similarFilmsRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        filmId = requireArguments().getInt(EXTRA_FILM_ID)
+        filmViewModel.setMovieId(requireArguments().getInt(EXTRA_MOVIE_ID))
+        checkMovieId()
         categoryNameActors.text = getString(R.string.actors)
         categoryNameSimilarFilms.text = getString(R.string.similar_films)
 
-        filmViewModel.movieLiveData.observe(
-                viewLifecycleOwner,
-                Observer { movieResponse ->
-                    setToolbarTitle(movieResponse)
-                    fetchUI(movieResponse)
-                })
-
-        filmViewModel.actorsLiveData.observe(
-            viewLifecycleOwner,
-            Observer { actorsResponse ->
-                if (actorsResponse.isNotEmpty()) {
-                    if (descriptionText.visibility == VISIBLE) actorsGrayDiv.visibility = VISIBLE
-                    actorsIncludeLayout.visibility = VISIBLE
-                    actorsDivider.visibility = VISIBLE
-                    actorsAll.visibility = GONE
-                    actorsRV.adapter = PopularPersonAdapter(actorsResponse, false)
-                }
-            })
-
-        filmViewModel.similarLiveData.observe(
-            viewLifecycleOwner,
-            Observer { similarResponse ->
-                //Log.e(TAG, "Similar:    " + similarResponse.size.toString())
-                if (similarResponse.isNotEmpty()) {
-                    //Log.e(TAG, "waatttt:   ${similarResponse.size}")
-                    similarsLayout.visibility = VISIBLE
-                    similarFilmsAll.visibility = GONE
-                    similarFilmsRV.adapter = SimilarFilmsAdapter(similarResponse)
-                    similarNonFactsGrayDiv.visibility = VISIBLE
-                    if (factsLayout.visibility == GONE) {
-                        Log.e(TAG, "eeee")
-                        similarNonFactsGrayDiv.visibility = VISIBLE
-                    }
-                }
+        lifecycleScope.launch() {
+            var movie = withContext(IOCoroutineContext) {
+                filmViewModel.getMovieById()
             }
-        )
+            setToolbarTitle(movie)
+            fetchUI(movie)
+        }
 
-        filmViewModel.statusFavoriteCB.observe(
-            viewLifecycleOwner,
-            Observer { flag ->
-                if (flag) favoriteCheckBox.isChecked = true
+        lifecycleScope.launch {
+            filmViewModel.actors.collect { actors ->
+                if (actors.isNotEmpty()) fillActorsUI(actors)
             }
-        )
+        }
 
-        filmViewModel.statusWatchLaterCB.observe(
-            viewLifecycleOwner,
-            Observer { flag ->
-                if (flag) watchLaterCheckBox.isChecked = true
+        lifecycleScope.launch {
+                filmViewModel.similarMovies.onEach { similarFilms ->
+                    fillSimilarFilmsUI(similarFilms)
+                }.collect()
+        }
+
+        lifecycleScope.launch(IOCoroutineContext) {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    filmViewModel.favoriteStatus.onEach {
+                        if (it) favoriteCheckBox.isChecked = true
+                    }.collect()
             }
-        )
+        }
 
-        filmViewModel.fetchFilmById(filmId)
-        //Log.e(TAG, filmId.toString())
+        lifecycleScope.launch(IOCoroutineContext) {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    filmViewModel.watchLaterStatus.onEach {
+                        if (it) watchLaterCheckBox.isChecked = true
+                    }.collect()
+            }
+        }
 
         favoriteCheckBox.setOnClickListener { v ->
             if (favoriteCheckBox.isChecked) {
@@ -216,7 +210,7 @@ class FilmFragment : Fragment(), OnBackPressedListener {
             } else {
                 deleteMovieFromFirebaseService(DELETE_FAVORITE_COLLECTION)
                 Toast.makeText(this.context, R.string.deleted_from_favorite, Toast.LENGTH_SHORT).show()
-                filmViewModel.deleteFromDB(addVariants[1] + filmId.toString())
+                filmViewModel.deleteFromDB(addVariants[1])
                 favoriteCheckBox.isPressed = true
                 return@setOnClickListener
             }
@@ -232,7 +226,7 @@ class FilmFragment : Fragment(), OnBackPressedListener {
             } else {
                 deleteMovieFromFirebaseService(DELETE_WATCH_LATER_COLLECTION)
                 Toast.makeText(this.context, R.string.deleted_from_watch_later, Toast.LENGTH_SHORT).show()
-                filmViewModel.deleteFromDB(addVariants[0] + filmId.toString())
+                filmViewModel.deleteFromDB(addVariants[0])
                 //statusWLCB = false
                 watchLaterCheckBox.isPressed = true
                 return@setOnClickListener
@@ -240,7 +234,7 @@ class FilmFragment : Fragment(), OnBackPressedListener {
         }
 
         frames.setOnClickListener { view ->
-            var bundle = bundleOf(EXTRA_FILM_ID to movieCurrent.data.filmId)
+            var bundle = bundleOf(EXTRA_MOVIE_ID to movieCurrent.data.filmId)
             view.findNavController().navigate(R.id.action_filmFragment_to_filmFramesFragment, bundle)
         }
 
@@ -256,12 +250,12 @@ class FilmFragment : Fragment(), OnBackPressedListener {
         }
 
         video.setOnClickListener { view ->
-            var bundle = bundleOf(EXTRA_FILM_ID to movieCurrent.data.filmId)
+            var bundle = bundleOf(EXTRA_MOVIE_ID to movieCurrent.data.filmId)
             view.findNavController().navigate(R.id.action_filmFragment_to_trailerFragment, bundle)
         }
 
         sequelsPrequels.setOnClickListener { view ->
-            var bundle = bundleOf(EXTRA_FILM_ID to movieCurrent.data.filmId)
+            var bundle = bundleOf(EXTRA_MOVIE_ID to movieCurrent.data.filmId)
             Log.e(TAG, movieCurrent.data.filmId.toString())
             view.findNavController().navigate(R.id.action_filmFragment_to_sequelsPrequelsFragment, bundle)
         }
@@ -289,6 +283,11 @@ class FilmFragment : Fragment(), OnBackPressedListener {
         if(activity != null) {
             (activity as MainActivity).getBackPressedListener(null)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        filmViewModel.saveMovieId()
     }
 
     override fun onBackPressedL() {
@@ -325,12 +324,12 @@ class FilmFragment : Fragment(), OnBackPressedListener {
         eventDetails.putString("message", "Adding in this category")
         if (position == 0) {
             sendDataForFirebaseService(ADD_WATCH_LATER_COLLECTION, addVariants[0])
-            filmViewModel.addToDB(filmId, addVariants[0])
+            filmViewModel.addToDB(addVariants[0])
             filmViewModel.sendEvent("add_to_watch_later", eventDetails)
         }
         if (position == 1) {
             sendDataForFirebaseService(ADD_FAVORITE_COLLECTION, addVariants[1])
-            filmViewModel.addToDB(filmId, addVariants[1])
+            filmViewModel.addToDB(addVariants[1])
             filmViewModel.sendEvent("add_to_favorites", eventDetails)
         }
     }
@@ -338,7 +337,7 @@ class FilmFragment : Fragment(), OnBackPressedListener {
     private fun deleteMovieFromFirebaseService(type: String) {
         var intent = Intent(requireActivity(), FirebaseStorageService::class.java)
         intent.putExtra(TYPE_COLLECTION, type)
-        intent.putExtra(EXTRA_ITEM_ID, filmId.toString())
+        intent.putExtra(EXTRA_ITEM_ID, filmViewModel.getMovieId().toString())
         requireActivity().startService(intent)
     }
 
@@ -395,7 +394,6 @@ class FilmFragment : Fragment(), OnBackPressedListener {
         else {
             visibilityText(factsText, "", factsLayout)
             if (similarFilmsRV.visibility == VISIBLE && similarsLayout.visibility == VISIBLE) {
-                //Log.e(TAG, "eeeee")
                 similarNonFactsGrayDiv.visibility = VISIBLE
             }
         }
@@ -417,5 +415,32 @@ class FilmFragment : Fragment(), OnBackPressedListener {
         shareText = if (movieCurrent.data.nameEn?.isNotBlank() == true) "\"${movieCurrent.data.nameRu}\"(\"${movieCurrent.data.nameEn}\", ${movieCurrent.data.year}) #kinopoisk\n${movieCurrent.data.webUrl}"
         else "\"${movieCurrent.data.nameRu}\"(${movieCurrent.data.year}) #kinopoisk\n${movieCurrent.data.webUrl}"
         return shareText
+    }
+
+    private fun fillActorsUI(actors: List<StaffPerson>) {
+        if (descriptionText.visibility == VISIBLE) actorsGrayDiv.visibility = VISIBLE
+        actorsIncludeLayout.visibility = VISIBLE
+        actorsDivider.visibility = VISIBLE
+        actorsAll.visibility = GONE
+        actorsRV.adapter = PopularPersonAdapter(actors, false)
+    }
+
+    private fun fillSimilarFilmsUI(similarFilms: List<SimilarFilm>) {
+        if (similarFilms.isNotEmpty()) {
+            similarsLayout.visibility = VISIBLE
+            similarFilmsAll.visibility = GONE
+            similarFilmsRV.adapter = SimilarFilmsAdapter(similarFilms)
+            similarNonFactsGrayDiv.visibility = VISIBLE
+            if (factsLayout.visibility == GONE) {
+                similarNonFactsGrayDiv.visibility = VISIBLE
+            }
+        }
+    }
+
+    private fun checkMovieId() {
+        if (!filmViewModel.isMovieIdReceived()) {
+            Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
+            NavHostFragment.findNavController(this@FilmFragment).popBackStack()
+        }
     }
 }

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.dataModel.Trailer
-import com.raaf.android.searchmovie.ui.showToolbar
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 
 private const val EXTRA_FILM_ID = "filmId"
 

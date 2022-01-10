@@ -1,6 +1,5 @@
 package com.raaf.android.searchmovie.ui.profile
 
-import android.content.res.Resources
 import android.graphics.*
 import android.os.Bundle
 import android.util.Log
@@ -15,17 +14,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
-import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.google.firebase.auth.FirebaseUser
 import com.raaf.android.searchmovie.R
-import com.raaf.android.searchmovie.ui.hideToolbar
+import com.raaf.android.searchmovie.ui.utils.hideToolbar
 
 private const val TAG = "ProfileFragment"
 private const val EXTRA_USER_EMAIL = "USER_EMAIL"

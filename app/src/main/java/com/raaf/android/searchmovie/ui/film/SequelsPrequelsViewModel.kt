@@ -1,19 +1,18 @@
 package com.raaf.android.searchmovie.ui.film
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.raaf.android.searchmovie.App
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.dataModel.rootJSON.SequelsPrequelsResponse
+import com.raaf.android.searchmovie.repository.FilmRepo
 import javax.inject.Inject
 
 
 class SequelsPrequelsViewModel : ViewModel() {
 
-    @Inject lateinit var filmFetcher: FilmFetcher
+    @Inject lateinit var repository: FilmRepo
 
     val movieLiveData: LiveData<List<SequelsPrequelsResponse>>
     private val mutableMovieId = MutableLiveData<Int>()
@@ -22,7 +21,7 @@ class SequelsPrequelsViewModel : ViewModel() {
         App.appComponent.inject(this)
 
         movieLiveData = Transformations.switchMap(mutableMovieId) { filmId ->
-            filmFetcher.fetchSequelsAndPrequelsByFilmId(filmId)
+            repository.fetchSequelsAndPrequelsByFilmId(filmId)
         }
     }
 

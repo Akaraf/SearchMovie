@@ -6,15 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.raaf.android.searchmovie.App
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.dataModel.Frame
+import com.raaf.android.searchmovie.repository.FilmRepo
 import javax.inject.Inject
 
 private const val TAG = "FilmFramesViewModel"
 
 class FilmFramesViewModel : ViewModel() {
 
-    @Inject lateinit var filmFetcher: FilmFetcher
+    @Inject lateinit var repository: FilmRepo
 
     val framesLiveData: LiveData<List<Frame>>
     private val mutableId = MutableLiveData<Int>()
@@ -23,7 +23,7 @@ class FilmFramesViewModel : ViewModel() {
         App.appComponent.inject(this)
 
         framesLiveData = Transformations.switchMap(mutableId) { id->
-            filmFetcher.fetchFrames(id)
+            repository.fetchFrames(id)
         }
     }
 

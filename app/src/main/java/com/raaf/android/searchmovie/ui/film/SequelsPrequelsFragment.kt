@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.dataModel.rootJSON.SequelsPrequelsResponse
 import com.raaf.android.searchmovie.ui.adapters.SequelsPrequelsAdapter
-import com.raaf.android.searchmovie.ui.showToolbar
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 
 private const val TAG = "SequelsPrequelsFragment"
 private const val EXTRA_FILM_ID = "filmId"

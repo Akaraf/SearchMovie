@@ -2,10 +2,8 @@ package com.raaf.android.searchmovie.ui.profile
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,12 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.backgroundJob.services.FirebaseStorageService
-import com.raaf.android.searchmovie.ui.showToolbar
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 
 private const val TAG = "SettingsFragment"
 private const val THEME_AUTO = "Auto"

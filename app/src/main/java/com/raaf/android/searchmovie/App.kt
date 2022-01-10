@@ -2,17 +2,15 @@ package com.raaf.android.searchmovie
 
 import android.app.*
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.*
-import android.util.Log
 import com.raaf.android.searchmovie.di.components.RefreshBackgroundComponent
-import com.raaf.android.searchmovie.backgroundJob.services.RefreshDBService
 import com.raaf.android.searchmovie.di.components.DaggerRefreshBackgroundComponent
 import com.raaf.android.searchmovie.di.components.DaggerAppComponent
 import com.raaf.android.searchmovie.di.components.AppComponent
 import com.raaf.android.searchmovie.di.modules.AppModule
+import com.raaf.android.searchmovie.ui.utils.startRefreshDBService
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -21,7 +19,6 @@ import javax.inject.Inject
 
 private const val TAG = "App"
 private const val CHANNEL_ID = "88811"
-private const val EXTRA_FIRST_START = "firstStart"
 private const val PREF_INSTALLATION_TIME = "InstallationTime"
 
 class App : Application() {
@@ -48,7 +45,7 @@ class App : Application() {
         refreshPreferences = getSharedPreferences("REFRESH_JOB_PREFERENCES",0)
         if (isFirstStartApp) {
             setPrefInstallationDate(refreshPreferences)
-            startRefreshDBService()
+            startRefreshDBService(this)
             settings.firstStartIsCompleted()
         }
 //        Set fonts
@@ -59,13 +56,6 @@ class App : Application() {
         super.onConfigurationChanged(newConfig)
         daggerComponentsBuilding()
         viewPumpBuilding()
-    }
-
-
-    private fun startRefreshDBService() {
-        val intent = Intent(this, RefreshDBService::class.java)
-        intent.putExtra(EXTRA_FIRST_START, true)
-        this.startService(intent)
     }
 
     private fun daggerComponentsBuilding() {

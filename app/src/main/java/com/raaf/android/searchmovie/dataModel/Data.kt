@@ -25,5 +25,4 @@ data class Data(
         val countries : List<Countries>,
         val genres : List<Genres>,
         val facts : List<String>,
-        //val seasons : List<String>
 )

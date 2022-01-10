@@ -11,10 +11,9 @@ import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.raaf.android.searchmovie.R
-import com.raaf.android.searchmovie.ui.showToolbar
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 
 private const val MAP_EMAIL = "email"
 private const val TAG = "Support Service F"

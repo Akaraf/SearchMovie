@@ -6,15 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.raaf.android.searchmovie.App
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
+import com.raaf.android.searchmovie.repository.FilmRepo
 import javax.inject.Inject
 
 private const val TAG = "MyFilmsViewModel"
 
 class MyFilmsViewModel : ViewModel() {
 
-    @Inject lateinit var filmFetcher: FilmFetcher
+    @Inject lateinit var repository: FilmRepo
 
     val list: LiveData<List<FilmSwipeItem>>
     private val mutableFlag = MutableLiveData<Boolean>()
@@ -24,7 +24,7 @@ class MyFilmsViewModel : ViewModel() {
         App.appComponent.inject(this)
 
         list = Transformations.switchMap(mutableFlag) {
-            filmFetcher.setMyFilms()
+            repository.setMyFilms()
         }
         Log.d(TAG, "list size = ${list.value?.size ?: 0}")
     }

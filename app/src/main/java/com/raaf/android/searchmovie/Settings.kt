@@ -7,7 +7,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
-import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 

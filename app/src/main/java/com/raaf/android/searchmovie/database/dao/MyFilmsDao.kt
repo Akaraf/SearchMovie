@@ -41,5 +41,8 @@ interface MyFilmsDao : BaseDao<Movie> {
     fun getCount() : Int
 
     @Transaction @Query("SELECT * FROM myfilms WHERE endsId = (:endsId)")
-    fun checkItem(endsId: String) : LiveData<Movie?>
+    fun checkItemLV(endsId: String) : LiveData<Movie?>
+
+    @Transaction @Query("SELECT * FROM myfilms WHERE endsId = (:endsId)")
+    suspend fun checkItem(endsId: String) : Movie?
 }

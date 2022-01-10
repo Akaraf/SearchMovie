@@ -35,10 +35,7 @@ class AppConverter(val context: Context) {
         item.premiereDigital = movieById.data.premiereDigital ?: ""
         item.premiereWorldCountry = movieById.data.premiereWorldCountry ?: ""
         item.distributorRelease = movieById.data.distributorRelease ?: ""
-//        item.countries = movieById.data.countries.forEach { += it.toString() }
-//        item.genres = movieById.data.genres.forEach { += it.toString() }
         item.facts = movieById.data.facts
-        //item.seasons = movieById.data.seasons
         item.parent = parentName
         item.endsId = parentName + movieById.data.filmId
         return item
@@ -61,7 +58,6 @@ class AppConverter(val context: Context) {
             item.totalPage = 0
             list.add(item)
         }
-        //Log.e(TAG, "parseMovies : ${list.size}")
         return list
     }
 
@@ -87,7 +83,6 @@ class AppConverter(val context: Context) {
             item.totalPage = page
             list.add(item)
         }
-        //Log.e(TAG, "parseFilms : ${list.size}")
         return list
     }
 
@@ -99,7 +94,6 @@ class AppConverter(val context: Context) {
             item.id = countId
             list.add(item)
         }
-        //Log.e(TAG, "parseFramesToFrame : ${list.size}")
         return list
     }
 
@@ -107,8 +101,6 @@ class AppConverter(val context: Context) {
         var list = mutableListOf<FilmSwipeItem>()
         for (count in releases) {
             var item = FilmSwipeItem()
-            //databaseId don't need
-            //Log.e(TAG, "parse item:::" + count.toString())
             item.databaseId = "DigitalReleases${count.filmId}"
             item.filmId = count.filmId
             item.nameRu = count.nameRu ?:""
@@ -123,7 +115,6 @@ class AppConverter(val context: Context) {
             item.totalPage = total/10 + 1
             list.add(item)
         }
-        //Log.e(TAG, "parseFilms : ${list.size}")
         return list
     }
 }

@@ -14,7 +14,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.R
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
 import com.raaf.android.searchmovie.ui.adapters.MyPersonCategoryAdapter
 import com.squareup.picasso.Picasso

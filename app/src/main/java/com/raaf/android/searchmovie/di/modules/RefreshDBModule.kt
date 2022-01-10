@@ -1,9 +1,8 @@
 package com.raaf.android.searchmovie.di.modules
 
 import android.app.Application
-import android.content.Context
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.backgroundJob.RefreshDB
+import com.raaf.android.searchmovie.repository.FilmRepo
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,7 +12,7 @@ class RefreshDBModule {
 
     @Provides
     @Singleton
-    fun provideRefreshDB(app: Application, filmFetcher: FilmFetcher) : RefreshDB {
-        return RefreshDB(app.applicationContext, filmFetcher)
+    fun provideRefreshDB(app: Application, filmRepository: FilmRepo) : RefreshDB {
+        return RefreshDB(app.applicationContext, filmRepository)
     }
 }

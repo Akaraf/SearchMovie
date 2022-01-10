@@ -91,6 +91,7 @@
     <string name="newest_tv_series">TV series of 2020</string>
     <string name="rus_tv_series">Russian TV series</string>
     <string name="best_asia_tv_series">The best Asian TV series</string>
+    <string name="error">Error</string>
 
     <string-array name="years">
         <item>@string/movies_of_2020</item>

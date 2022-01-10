@@ -12,10 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.R
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.backgroundJob.RefreshDB
 import com.raaf.android.searchmovie.ui.MainActivity
-import dagger.android.AndroidInjection
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors

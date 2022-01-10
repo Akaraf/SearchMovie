@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.ui.adapters.FactsAdapter
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 
 private const val EXTRA_FACTS_TEXT = "facts"
 
@@ -18,7 +20,7 @@ class FactsFragment : Fragment() {
    private lateinit var facts: List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        showToolbar(requireActivity().findViewById(R.id.toolbar), getString(R.string.facts))
+        showToolbar(requireActivity().findViewById(R.id.toolbar) as MaterialToolbar, getString(R.string.facts))
         super.onCreate(savedInstanceState)
     }
 
@@ -29,7 +31,10 @@ class FactsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_facts, container, false)
         factsRecycler = view.findViewById(R.id.facts_recycler_view)
-        factsRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        factsRecycler.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.VERTICAL,
+            false)
         facts = requireArguments().getStringArrayList(EXTRA_FACTS_TEXT) ?: listOf()
         return view
     }

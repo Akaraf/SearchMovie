@@ -12,7 +12,7 @@ import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.raaf.android.searchmovie.R
-import com.raaf.android.searchmovie.ui.showToolbar
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 
 private const val TAG = "TrailerVideoFragment"
 private const val EXTRA_URL = "url"

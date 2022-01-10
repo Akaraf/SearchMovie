@@ -27,7 +27,7 @@ import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
 import com.raaf.android.searchmovie.dataModel.rootJSON.PersonResponse
 import com.raaf.android.searchmovie.backgroundJob.services.FirebaseStorageService
 import com.raaf.android.searchmovie.ui.adapters.MyPersonCategoryAdapter
-import com.raaf.android.searchmovie.ui.showToolbar
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 import kotlin.math.roundToInt
 
 //4 перехода: HomeFragment, ProfileFragment, SearchFragment buttons

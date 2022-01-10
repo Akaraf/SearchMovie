@@ -4,13 +4,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.raaf.android.searchmovie.R
-import com.raaf.android.searchmovie.api.FilmFetcher
+import com.raaf.android.searchmovie.repository.FilmRepo
 import com.raaf.android.searchmovie.ui.MainActivity
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -21,7 +20,7 @@ private const val TAG = "RefreshDB"
 private const val CHANNEL_ID = "88811"
 private const val NOTIFICATION_ID = 122
 
-class RefreshDB @Inject constructor(val context: Context, val filmFetcher: FilmFetcher) {
+class RefreshDB @Inject constructor(val context: Context, val repository: FilmRepo) {
 
     private lateinit var executors: ExecutorService
     private var isExecutorsInit = false
@@ -68,7 +67,7 @@ class RefreshDB @Inject constructor(val context: Context, val filmFetcher: FilmF
 
     private fun fillingDBForService() {
         executors.execute {
-            filmFetcher.getCompilation()
+            repository.getCompilation()
         }
         Handler(Looper.getMainLooper()).postDelayed({
             executors.execute {
@@ -86,28 +85,28 @@ class RefreshDB @Inject constructor(val context: Context, val filmFetcher: FilmF
 
         Handler(Looper.getMainLooper()).postDelayed({
             executors.execute {
-                filmFetcher.setPopularPersonsFromMyFilms()
+                repository.setPopularPersonsFromMyFilms()
             }
         }, 9000)
 
         Handler(Looper.getMainLooper()).postDelayed({
             executors.execute {
-                filmFetcher.fillingYearItemsForCategoryDb(context.resources.getStringArray(R.array.years).toList(), context.getString(R.string.years))
+                repository.fillingYearItemsForCategoryDb(context.resources.getStringArray(R.array.years).toList(), context.getString(R.string.years))
             }
         }, 11000)
         Handler(Looper.getMainLooper()).postDelayed({
             executors.execute {
-                filmFetcher.fillingGenreItemsForCategoryDb(context.resources.getStringArray(R.array.genres).toList(), context.getString(R.string.genre))
+                repository.fillingGenreItemsForCategoryDb(context.resources.getStringArray(R.array.genres).toList(), context.getString(R.string.genre))
             }
         }, 13000)
         Handler(Looper.getMainLooper()).postDelayed({
             executors.execute {
-                filmFetcher.fillingTVSeriesItemsForCategoryDb(context.resources.getStringArray(R.array.tv_series).toList(), context.getString(R.string.tv_series))
+                repository.fillingTVSeriesItemsForCategoryDb(context.resources.getStringArray(R.array.tv_series).toList(), context.getString(R.string.tv_series))
             }
         }, 15000)
         Handler(Looper.getMainLooper()).postDelayed({
             executors.execute {
-                filmFetcher.fillingCountriesCategory(context.resources.getStringArray(R.array.countries).toList(), context.getString(R.string.countries))
+                repository.fillingCountriesCategory(context.resources.getStringArray(R.array.countries).toList(), context.getString(R.string.countries))
             }
         }, 17000)
     }
@@ -116,7 +115,7 @@ class RefreshDB @Inject constructor(val context: Context, val filmFetcher: FilmF
         Log.e(TAG, "fillingDB")
         executors.execute {
             Log.e(TAG, "1")
-            filmFetcher.getCompilation()
+            repository.getCompilation()
         }
         jobHandler.postDelayed({
             executors.execute {
@@ -148,54 +147,54 @@ class RefreshDB @Inject constructor(val context: Context, val filmFetcher: FilmF
         jobHandler.postDelayed({
             executors.execute {
                 Log.e(TAG, "6")
-                filmFetcher.setPopularPersonsFromMyFilms()
+                repository.setPopularPersonsFromMyFilms()
             }
         }, 15500)
 
         jobHandler.postDelayed({
             executors.execute {
                 Log.e(TAG, "7")
-                filmFetcher.fillingYearItemsForCategoryDb(context.resources.getStringArray(R.array.years).toList(), context.getString(R.string.years))
+                repository.fillingYearItemsForCategoryDb(context.resources.getStringArray(R.array.years).toList(), context.getString(R.string.years))
             }
         }, 19000)
         jobHandler.postDelayed({
             executors.execute {
                 Log.e(TAG, "8")
-                filmFetcher.fillingGenreItemsForCategoryDb(context.resources.getStringArray(R.array.genres).toList(), context.getString(R.string.genre))
+                repository.fillingGenreItemsForCategoryDb(context.resources.getStringArray(R.array.genres).toList(), context.getString(R.string.genre))
             }
         }, 22000)
         jobHandler.postDelayed({
             executors.execute {
                 Log.e(TAG, "9")
-                filmFetcher.fillingTVSeriesItemsForCategoryDb(context.resources.getStringArray(R.array.tv_series).toList(), context.getString(R.string.tv_series))
+                repository.fillingTVSeriesItemsForCategoryDb(context.resources.getStringArray(R.array.tv_series).toList(), context.getString(R.string.tv_series))
             }
         }, 26000)
         jobHandler.postDelayed({
             executors.execute {
                 Log.e(TAG, "10")
-                filmFetcher.fillingCountriesCategory(context.resources.getStringArray(R.array.countries).toList(), context.getString(R.string.countries))
+                repository.fillingCountriesCategory(context.resources.getStringArray(R.array.countries).toList(), context.getString(R.string.countries))
             }
         }, 30000)
     }
 
     private fun fetchReleases(year: Int, month: Int) {
         val months = listOf(monthNames[month], monthNames[month+1], monthNames[month+2], monthNames[month+3])
-        filmFetcher.getReleases(year, months)
+        repository.getReleases(year, months)
     }
 
     private fun fillingTopDb(type: String, name: String) {
         for (count in 1..5) {
-            filmFetcher.getTop(type, count, name)
+            repository.getTop(type, count, name)
         }
     }
 
     fun clearDatabases() {
         Log.e(TAG, "clearDatabases")
-        filmFetcher.clearTopDb()
-        filmFetcher.clearCompilationDb()
-        filmFetcher.clearReleasesDb()
-        filmFetcher.clearPopularPersonDb()
-        filmFetcher.clearCategoryDb()
+        repository.clearTopDb()
+        repository.clearCompilationDb()
+        repository.clearReleasesDb()
+        repository.clearPopularPersonDb()
+        repository.clearCategoryDb()
     }
 
 

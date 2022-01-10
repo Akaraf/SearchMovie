@@ -4,7 +4,6 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -16,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,20 +25,21 @@ import androidx.work.*
 import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.backgroundJob.jobServices.RefreshDBJobService
-import com.raaf.android.searchmovie.backgroundJob.services.RefreshDBService
 import com.raaf.android.searchmovie.backgroundJob.workers.RefreshDBWorker
 import com.raaf.android.searchmovie.ui.film.OnBackPressedListener
+import com.raaf.android.searchmovie.ui.utils.startRefreshDBService
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
+import kotlinx.coroutines.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 private const val TAG = "MainActivity"
 private const val TAG_WORKER = "RefreshDBWorker"
-private const val EXTRA_FIRST_START = "firstStart"
 private const val PREF_INSTALLATION_TIME = "InstallationTime"
 private const val PREF_JOB_IS_DONE = "JobFlag"
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var mainViewModel: MainViewModel
     lateinit var toolbar: Toolbar
     var onBackPressedListener: OnBackPressedListener? = null
@@ -50,7 +51,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         mainViewModel.setValueForRefreshJob(3, this)
-        if (!hasConnection(this)) Toast.makeText(baseContext, R.string.problem_connection, Toast.LENGTH_LONG).show()
+
+        lifecycleScope.launch {
+            val flag = withContext(Dispatchers.IO) {
+                mainViewModel.checkDB()
+            }
+            isDBEmpty(flag)
+        }
+
+        if (!hasConnection(this)) Toast.makeText(baseContext,
+            R.string.problem_connection, Toast.LENGTH_LONG).show()
         else if (!App.isFirstStartApp) {
                 Log.e(TAG, "NFS")
                 val refreshIsDoneFlag = App.refreshPreferences.getInt(PREF_JOB_IS_DONE, 0)
@@ -58,10 +68,10 @@ class MainActivity : AppCompatActivity() {
                 if (refreshIsDoneFlag == 0) {
                     Log.e(TAG, "back job is not done yet")
                     Log.e(TAG, "start Service for update ui")
-                    startRefreshDBService()
-                    if (getPrefInstallationDate(App.refreshPreferences) < Calendar.getInstance().timeInMillis){
-                        Log.e(TAG, "china shit")
-                        Toast.makeText(this, this.getString(R.string.allow_autorun), Toast.LENGTH_LONG).show()
+                    if (getPrefInstallationDate(App.refreshPreferences) < Calendar.getInstance().timeInMillis) {
+                        Toast.makeText(this,
+                            this.getString(R.string.allow_autorun),
+                            Toast.LENGTH_LONG).show()
                     }
             }
         }
@@ -111,12 +121,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun startRefreshDBService() {
-        val intent = Intent(this, RefreshDBService::class.java)
-        intent.putExtra(EXTRA_FIRST_START, true)
-        this.startService(intent)
-    }
-
     private fun getPrefInstallationDate(sp: SharedPreferences) : Long {
         var prefTime = sp.getLong(PREF_INSTALLATION_TIME, 0L)
         if (prefTime != 0L) {
@@ -140,7 +144,7 @@ class MainActivity : AppCompatActivity() {
     private fun startRefreshDBWorker() {
         val calendar = Calendar.getInstance()
 //      Указываем нужное время для запуска worker
-        calendar.set(Calendar.HOUR_OF_DAY, 21)
+        calendar.set(Calendar.HOUR_OF_DAY, 17)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
 //      Если указанное раннее время уже прошло не прошло в момент выполнения кода, то прибавляем к указанному выше времени 24 часа
@@ -169,7 +173,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Checking internet connection
-    fun hasConnection(context: Context) : Boolean {
+    private fun hasConnection(context: Context) : Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
@@ -193,5 +197,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return false
+    }
+
+    fun isDBEmpty(isEmpty: Boolean) {
+        Log.e(TAG, "isDBEmpty::$isEmpty")
+        if (isEmpty) startRefreshDBService(this)
     }
 }

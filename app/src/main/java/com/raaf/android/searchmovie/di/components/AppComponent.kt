@@ -2,12 +2,13 @@ package com.raaf.android.searchmovie.di.components
 
 import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.Settings
-import com.raaf.android.searchmovie.api.FilmFetcher
 import com.raaf.android.searchmovie.backgroundJob.RefreshDB
 import com.raaf.android.searchmovie.backgroundJob.services.FirebaseStorageService
 import com.raaf.android.searchmovie.backgroundJob.services.RefreshDBService
 import com.raaf.android.searchmovie.di.modules.*
+import com.raaf.android.searchmovie.repository.FilmRepo
 import com.raaf.android.searchmovie.repository.User
+import com.raaf.android.searchmovie.ui.MainViewModel
 import com.raaf.android.searchmovie.ui.film.FilmFramesViewModel
 import com.raaf.android.searchmovie.ui.film.FilmViewModel
 import com.raaf.android.searchmovie.ui.film.SequelsPrequelsViewModel
@@ -25,6 +26,7 @@ import com.raaf.android.searchmovie.ui.profile.SupportServiceViewModel
 import com.raaf.android.searchmovie.ui.search.SearchResultViewModel
 import com.raaf.android.searchmovie.ui.search.SearchViewModel
 import com.raaf.android.searchmovie.ui.search.categoryForSearch.CategoryForSearchViewModel
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -34,7 +36,7 @@ interface AppComponent {
 
     fun inject(app: App)
     //fun inject(worker: Worker)
-    fun inject(filmFetcher: FilmFetcher)
+    fun inject(filmRepo: FilmRepo)
     fun inject(user: User)
     fun inject(settings: Settings)
     fun inject(refreshDB: RefreshDB)
@@ -43,8 +45,9 @@ interface AppComponent {
     fun inject(firebaseStorageService: FirebaseStorageService)
 
     //fun inject(refreshDBWorker: RefreshDBWorker)
+    fun inject(mainActivityVM: MainViewModel)
     fun inject(searchResultVM: SearchResultViewModel)
-    fun inject(filmVM: FilmViewModel)
+    fun filmVM() : FilmViewModel.Factory
     fun inject(topVM: TopViewModel)
     fun inject(compilationVM: CompilationViewModel)
     fun inject(detailCategoryVM: DetailCategoryViewModel)

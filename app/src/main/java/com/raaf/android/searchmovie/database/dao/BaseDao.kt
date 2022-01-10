@@ -13,4 +13,6 @@ interface BaseDao<T> {
 
     @Delete
     fun delete(vararg obj: T)
+
+
 }

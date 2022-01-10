@@ -1,17 +1,14 @@
 package com.raaf.android.searchmovie.ui.film
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.dataModel.Frame
-import com.raaf.android.searchmovie.ui.showToolbar
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 
 private const val TAG = "FilmFramesPagerFragment"
 private const val EXTRA_INITIAL_ITEM_POS = "position"

@@ -1,17 +1,13 @@
 package com.raaf.android.searchmovie.ui.profile
 
-import android.content.res.ColorStateList
-import android.content.res.XmlResourceParser
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.raaf.android.searchmovie.R
-import com.raaf.android.searchmovie.ui.showToolbar
-import java.lang.Exception
+import com.raaf.android.searchmovie.ui.utils.showToolbar
 
 private const val CONTENT_TYPE = "ContentType"
 private const val LICENSE_AGREEMENT_TYPE = "LicenseAgreement"

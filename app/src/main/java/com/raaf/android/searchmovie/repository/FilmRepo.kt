@@ -1,4 +1,4 @@
-package com.raaf.android.searchmovie.api
+package com.raaf.android.searchmovie.repository
 
 import android.content.Context
 import android.util.Log
@@ -6,6 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.raaf.android.searchmovie.App
 import com.raaf.android.searchmovie.R
+import com.raaf.android.searchmovie.api.FilmApi
+import com.raaf.android.searchmovie.api.FilmInterceptor
+import com.raaf.android.searchmovie.api.FilmWebService
 import com.raaf.android.searchmovie.dataModel.*
 import com.raaf.android.searchmovie.dataModel.homeItems.FilmSwipeItem
 import com.raaf.android.searchmovie.dataModel.rootJSON.*
@@ -14,7 +17,6 @@ import com.raaf.android.searchmovie.database.cacheDB.CategoryFilmsCacheDatabase
 import com.raaf.android.searchmovie.database.cacheDB.MoviesForPersonCacheDatabase
 import com.raaf.android.searchmovie.database.top.ReleasesDatabase
 import com.raaf.android.searchmovie.database.top.TopDatabase
-import com.raaf.android.searchmovie.repository.AppConverter
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,18 +34,19 @@ private var YEARS_PARAMETERS = listOf(Pair(2020, 2020), Pair(2019, 2019), Pair(2
                                         Pair(2010, 2014), Pair(2000, 2009), Pair(1990, 1999), Pair(1980, 1989), Pair(1970, 1979), Pair(1960, 1969),
                                         Pair(1950, 1959), Pair(1940, 1949), Pair(1930, 1939), Pair(1920, 1929), Pair(1910, 1919), Pair(1900, 1909), Pair(1890, 1899))
 
-class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
-                                      val myFilmsDatabase: MyFilmsDatabase,
-                                      val compilationDatabase: CompilationDatabase,
-                                      val watchedDatabase: WatchedDatabase,
-                                      val releasesDatabase: ReleasesDatabase,
-                                      val popularPersonDatabase: PopularPersonDatabase,
-                                      val myPersonsDatabase: MyPersonsDatabase,
-                                      val moviesForPersonCacheDatabase: MoviesForPersonCacheDatabase,
-                                      val categoryDatabase: CategoryDatabase,
-                                      val categoryFilmsCacheDatabase: CategoryFilmsCacheDatabase,
-                                      val appConverter: AppConverter,
-                                      val context: Context) {
+class FilmRepo @Inject constructor(val filmWebService: FilmWebService,
+                                   val topDatabase: TopDatabase,
+                                   val myFilmsDatabase: MyFilmsDatabase,
+                                   val compilationDatabase: CompilationDatabase,
+                                   val watchedDatabase: WatchedDatabase,
+                                   val releasesDatabase: ReleasesDatabase,
+                                   val popularPersonDatabase: PopularPersonDatabase,
+                                   val myPersonsDatabase: MyPersonsDatabase,
+                                   val moviesForPersonCacheDatabase: MoviesForPersonCacheDatabase,
+                                   val categoryDatabase: CategoryDatabase,
+                                   val categoryFilmsCacheDatabase: CategoryFilmsCacheDatabase,
+                                   val appConverter: AppConverter,
+                                   val context: Context) {
 
     private val filmApi: FilmApi
     private var bestWorks: String
@@ -98,6 +101,10 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
         fun getWatchParentName() : String {
             return myFilms[0]
         }
+
+    suspend fun requestMovieForUI(id: Int, appendToResponse: Array<String>) : MovieById {
+        return filmWebService.fetchMovie(id, appendToResponse)
+    }
 
         //  Search Movie By Id(1)
         fun fetchMovie(id: Int, appendToResponse: Array<String>, isAddFromDB: Boolean, parent: String): LiveData<MovieById> {
@@ -228,6 +235,7 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
 
         //    Filters(7)
         fun fetchFilters(): LiveData<FiltersResponse> {
+
             val responseLiveData: MutableLiveData<FiltersResponse> = MutableLiveData()
             val filtersRequest: Call<FiltersResponse> = filmApi.fetchFilters()
 
@@ -237,7 +245,7 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
                 }
 
                 override fun onResponse(call: Call<FiltersResponse>, response: Response<FiltersResponse>) {
-//                val s = response.toString()
+                val responseUrl = response
                 }
             })
             return responseLiveData
@@ -343,6 +351,10 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
             return pagesCount
         }
 
+    suspend fun requestSimilarFilmsByMovieId(id: Int) : List<SimilarFilm> {
+        return filmWebService.fetchSimilarsMovieByFilmId(id).items
+    }
+
         fun fetchSimilarFilmsByFilmId(id: Int) : LiveData<List<SimilarFilm>> {
             val responseLiveData = MutableLiveData<List<SimilarFilm>>()
             val similarRequest: Call<RelatedFilmResponse> = filmApi.fetchSimilarsMovieByFilmId(id)
@@ -408,6 +420,11 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
                 }
             })
         }
+
+    suspend fun requestStaffByMovieId(filmId: Int) : List<StaffPerson> {
+        Log.e(TAG, "rS: $filmId")
+        return filmWebService.fetchStaffByMovieId(filmId)
+    }
 
         fun fetchStaffByIdForUI(filmId: Int): LiveData<List<StaffPerson>> {
             val releasesRequest: Call<List<StaffPerson>> = filmApi.fetchStaffByMovieId(filmId)
@@ -477,8 +494,12 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
 //            executor.execute { watchedDao.deleteWithEndsId(endsId) }
 //        }
 
-        fun checkMovieInMyFilmsDB(parentName: Int, filmId: Int) : MutableLiveData<Boolean> {
-            val dbLiveData = myFilmsDao.checkItem(myFilms[parentName] + filmId.toString())
+    suspend fun checkMovieInMyFilmsDB(parent: Int, movieId: Int) : Boolean {
+        return myFilmsDao.checkItem(myFilms[parent] + movieId) != null
+    }
+
+        fun checkMovieInMyFilmsDB2(parentName: Int, filmId: Int) : MutableLiveData<Boolean> {
+            val dbLiveData = myFilmsDao.checkItemLV(myFilms[parentName] + filmId.toString())
             val resultLiveData = MutableLiveData<Boolean>()
             dbLiveData.observeForever {
                 resultLiveData.value = it != null
@@ -539,9 +560,6 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
         fun clearPersonCache() {
             executor.execute { moviesForPersonCacheDatabase.clearAllTables() }
         }
-
-
-
 
         fun setReleases() : LiveData<List<FilmSwipeItem>> {
             return releasesDao.loadAll()
@@ -914,5 +932,35 @@ class FilmFetcher @Inject constructor(val topDatabase: TopDatabase,
                 countInt += 1
             }
         }
+    }
+
+    suspend fun checkDBContent() : Boolean {
+        val databasesState = listOf(isCategoryDBEmpty(),
+                isCompilationDBEmpty(),
+                isPopularPersonDBEmpty(),
+                isReleasesDBEmpty(),
+                isTopDBEmpty())
+        databasesState.forEach { if (it) return it }
+        return false
+    }
+
+    private fun isCompilationDBEmpty() : Boolean {
+        return compilationDao.getCount() == 0
+    }
+
+    private fun isReleasesDBEmpty() : Boolean {
+        return releasesDao.getCount() == 0
+    }
+
+    private fun isTopDBEmpty() : Boolean {
+        return topDao.getCount() == 0
+    }
+
+    private fun isPopularPersonDBEmpty() : Boolean {
+        return popularPersonDao.getCount() == 0
+    }
+
+    private fun isCategoryDBEmpty() : Boolean {
+        return categoryDao.getCount() == 0
     }
 }
