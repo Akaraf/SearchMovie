@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.raaf.android.searchmovie.R
 import com.raaf.android.searchmovie.dataModel.Film
+import com.raaf.android.searchmovie.ui.utils.fillCardFilmUI
 import com.squareup.picasso.Picasso
 
 private const val TAG = "FilmAdapter"
@@ -28,89 +29,9 @@ class FilmAdapter(private val filmItems: List<Film>) : RecyclerView.Adapter<Film
     override fun onBindViewHolder(holder: FilmHolder, position: Int) {
         holder.setIsRecyclable(false)
         val filmItem = filmItems[position]
-        val imageView = holder.imageFilm
-        Picasso.get()
-                .load(filmItem.posterUrl)
-                .placeholder(R.drawable.splash_screen)
-                .error(R.drawable.splash_screen)
-                .fit()
-                .into(imageView)
-
-        val checkRating = filmItem.rating.toString()
-//            First line cardView
-        when {
-            (filmItem.nameRu!!.isNotBlank() && checkRating != "0.0") -> {
-                holder.rating.text = filmItem.rating
-                holder.nameRu.text = filmItem.nameRu
-            }
-            (filmItem.nameRu!!.isNotBlank() && checkRating == "0.0") -> {
-                holder.rating.visibility = View.GONE
-                holder.nameRu.text = filmItem.nameRu
-            }
-            (filmItem.nameRu!!.isBlank() && checkRating != "0.0") -> {
-                holder.rating.text = filmItem.rating
-                holder.nameRu.text = filmItem.nameEn
-                if (filmItem.year.isNotBlank()) {
-                    holder.nameEn.text = filmItem.year
-                } else {
-                    holder.nameEn.visibility = View.GONE
-                }
-            }
-            (filmItem.nameRu!!.isBlank() && checkRating == "0.0") -> {
-                holder.rating.visibility = View.GONE
-                holder.nameRu.text = filmItem.nameEn
-                if (filmItem.year.isNotBlank()) {
-                    holder.nameEn.text = filmItem.year
-                } else {
-                    holder.nameEn.visibility = View.GONE
-                }
-            }
-        }
-
-//            Second line cardView
-        if (filmItem.nameRu != null && filmItem.nameRu!!.isNotBlank()) {
-            var nameEnAndYearText = ""
-            var nameEn = ""
-            if (filmItem.nameEn != null) {
-                nameEn = if (filmItem.nameEn!!.count() > 25) "${filmItem.nameEn!!.substring(0, 26)}.."
-                else filmItem.nameEn!!
-            }
-            var year = filmItem.year
-            nameEnAndYearText = if (nameEn != "" && year != "") "$nameEn, $year"
-            else "$nameEn$year"
-            if (nameEnAndYearText != "") holder.nameEn.text = nameEnAndYearText
-            else holder.nameEn.visibility = GONE
-        }
-
-//            Third line cardView
-        var countries = ""
-        if (filmItem.countries.isNotEmpty()) {
-            if (filmItem.countries.size > 2) {
-                countries += filmItem.countries[0].country
-                countries += ", "
-                countries += filmItem.countries[1].country
-            } else countries += filmItem.countries[0].country
-        }
-        if (countries != "") holder.country.text = countries
-        else {
-            holder.country.visibility = View.GONE
-            holder.imageDote.visibility = View.GONE
-        }
-
-        var genres = ""
-        if (filmItem.genres.isNotEmpty()) {
-            if (filmItem.genres.size > 2) {
-                genres += filmItem.genres[0].genre
-                genres += ", "
-                genres += filmItem.genres[1].genre
-            } else genres += filmItem.genres[0].genre
-        }
-        if (genres != "") holder.genres.text = genres
-        else {
-            holder.genres.visibility = View.GONE
-            holder.imageDote.visibility = View.GONE
-        }
-
+        fillCardFilmUI(
+            filmItem, holder.imageFilm, holder.nameRu, holder.nameEn, holder.rating, holder.country,
+            holder.genres, holder.imageDote)
         if (position+1 == itemCount) {
             holder.divider.visibility = GONE
             holder.dividerEnd.visibility = View.VISIBLE

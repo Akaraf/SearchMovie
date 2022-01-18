@@ -23,6 +23,7 @@ import com.raaf.android.searchmovie.ui.profile.AuthViewModel
 import com.raaf.android.searchmovie.ui.profile.ProfileViewModel
 import com.raaf.android.searchmovie.ui.profile.SettingsViewModel
 import com.raaf.android.searchmovie.ui.profile.SupportServiceViewModel
+import com.raaf.android.searchmovie.ui.search.SearchFragment
 import com.raaf.android.searchmovie.ui.search.SearchResultViewModel
 import com.raaf.android.searchmovie.ui.search.SearchViewModel
 import com.raaf.android.searchmovie.ui.search.categoryForSearch.CategoryForSearchViewModel
@@ -30,7 +31,10 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [AppModule::class, FilmFetcherModule::class, DatabaseModule::class, AppConverterModule::class, FirebaseModule::class, UserModule::class, AppPreferencesModule::class, SettingsModule::class, RefreshDBModule::class])
+@Component(modules = [AppModule::class, FilmFetcherModule::class, DatabaseModule::class,
+    AppConverterModule::class, FirebaseModule::class, UserModule::class,
+    AppPreferencesModule::class, SettingsModule::class, RefreshDBModule::class,
+    RandomMovieUpdaterModule::class])
 @Singleton
 interface AppComponent {
 
@@ -57,7 +61,7 @@ interface AppComponent {
     fun inject(filmFramesVM: FilmFramesViewModel)
     fun inject(trailerVM: TrailerViewModel)
     fun inject(supportServiceVM: SupportServiceViewModel)
-    fun inject(searchVM: SearchViewModel)
+    fun searchVM() : SearchViewModel.Factory
     fun inject(personVM: PersonViewModel)
     fun inject(sequelsPrequelsVM: SequelsPrequelsViewModel)
     fun inject(categoryForSearchVM: CategoryForSearchViewModel)

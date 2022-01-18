@@ -194,4 +194,6 @@
     <string name="message_subject">Тема сообщения</string>
     <string name="feedback">Обратная связь</string>
     <string name="error">Ошибка</string>
+    <string name="random_movie">Случайный фильм</string>
+    <string name="change_filters">Изменить фильтры</string>
 </resources>

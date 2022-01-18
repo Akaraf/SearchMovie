@@ -22,6 +22,9 @@
     <string name="digital_releases">Digital releases</string>
     <string name="popular_actors">Popular actors</string>
 
+    <string name="random_movie">Random movie</string>
+    <string name="change_filters">Change filters</string>
+
     <string-array name="genres">
         <item>@string/anime</item>
         <item>@string/biography</item>

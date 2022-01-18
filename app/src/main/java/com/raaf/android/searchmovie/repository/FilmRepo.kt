@@ -18,10 +18,7 @@ import com.raaf.android.searchmovie.database.cacheDB.MoviesForPersonCacheDatabas
 import com.raaf.android.searchmovie.database.top.ReleasesDatabase
 import com.raaf.android.searchmovie.database.top.TopDatabase
 import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
@@ -102,8 +99,14 @@ class FilmRepo @Inject constructor(val filmWebService: FilmWebService,
             return myFilms[0]
         }
 
-    suspend fun requestMovieForUI(id: Int, appendToResponse: Array<String>) : MovieById {
-        return filmWebService.fetchMovie(id, appendToResponse)
+    suspend fun requestMovieForUI(id: Int, appendToResponse: Array<String>) : MovieById? {
+        Log.e(TAG, "Thread: ${Thread.currentThread().name}")
+        try {
+            return filmWebService.fetchMovie(id, appendToResponse)
+        } catch (e: HttpException) {
+            Log.e(TAG, "HTTP 404")
+        }
+        return null
     }
 
         //  Search Movie By Id(1)

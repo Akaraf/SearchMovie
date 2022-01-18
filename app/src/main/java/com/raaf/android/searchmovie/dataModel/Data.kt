@@ -12,7 +12,7 @@ data class Data(
         val slogan : String,
         val description : String,
         val type : String,
-        val ratingMpaa : String,
+        val ratingMpaa : String?,
         val ratingAgeLimits : Int,
         val premiereRu : String,
         val distributors : String,

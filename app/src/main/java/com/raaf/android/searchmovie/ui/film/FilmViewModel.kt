@@ -56,7 +56,7 @@ class FilmViewModel @AssistedInject constructor(
 
     fun getMovieId() : Int = movieId
 
-    suspend fun getMovieById() : MovieById {
+    suspend fun getMovieById() : MovieById? {
         return repository.requestMovieForUI(movieId, arr)
     }
 

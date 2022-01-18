@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_16">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/random_movie"
+        fontPath="fonts/bold.ttf"
+        style="@style/StartEndMargin16"
+        android:layout_marginBottom="@dimen/margin_24"
+        tools:text="Заголовок категории"
+        tools:ignore="MissingPrefix" />
+
+    <include
+        android:id="@+id/random_film_include_layout"
+        layout="@layout/card_film" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/margin_32">
+
+        <Button
+            android:id="@+id/random_movie_button"
+            android:text="@string/random_movie"
+            android:layout_width="181dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_16"/>
+
+        <Button
+            android:id="@+id/filter_button"
+            android:text="@string/change_filters"
+            android:layout_width="181dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"/>
+    </LinearLayout>
+</LinearLayout>

@@ -13,7 +13,6 @@ class AppConverter(val context: Context) {
     val nameCompilation = listOf(context.getString(R.string.comedy), context.getString(R.string.fantasy), context.getString(
         R.string.cartoon), context.getString(R.string.drama), context.getString(R.string.action))
 
-
     fun parseMovieByIdToMovie(movieById: MovieById, parentName: String) : Movie {
         var item = Movie()
         item.filmId = movieById.data.filmId

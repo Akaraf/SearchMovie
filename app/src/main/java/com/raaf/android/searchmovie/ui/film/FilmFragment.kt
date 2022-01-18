@@ -169,8 +169,10 @@ class FilmFragment : Fragment(), OnBackPressedListener {
             var movie = withContext(IOCoroutineContext) {
                 filmViewModel.getMovieById()
             }
-            setToolbarTitle(movie)
-            fetchUI(movie)
+            if (movie != null) {
+                setToolbarTitle(movie)
+                fetchUI(movie)
+            }
         }
 
         lifecycleScope.launch {
