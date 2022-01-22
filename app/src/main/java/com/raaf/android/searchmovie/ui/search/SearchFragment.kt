@@ -181,6 +181,7 @@ class SearchFragment : Fragment() {
                             fillCardFilmUI(
                                 it, imageFilm, nameRu, nameEn, rating, country, genres, imageDote
                             )
+                            currentRandomMovieId = it.filmId
                             randomMovieLayout.visibility = VISIBLE
                         } else Log.e(TAG, "null")
                     }.collect()

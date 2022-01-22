@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+ApiKey.kt
+doc.kt
